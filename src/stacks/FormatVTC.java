@@ -33,7 +33,7 @@ public class FormatVTC {
 	
 	
 	int indexEndOfHeader;
-	byte[] images;
+	float[] images;
 
 	public FormatVTC(byte[] data) {
 		
@@ -90,16 +90,23 @@ public class FormatVTC {
 			printInfo();
 			System.out.println("-->"+(wrapped.limit() - wrapped.position())+" || "+getDimX()*getDimY()*getDimZ()*getNumbeOfVolumes()*2);
 			
-			images = new byte[wrapped.remaining()]; 
-			wrapped.get(images, 0, images.length);//save data since end of header to limit
+			images = new float[getDimX()*getDimY()*getDimZ()*getNumbeOfVolumes()*2]; 
+			//save data since end of header to limit
+			int i=0;
+			while(wrapped.position()<=wrapped.limit()-4){
+				images[i] = (byte) wrapped.getFloat();
+				i++;
+			}
+
+		
 			//añadir condicion short or float
 			int j =0;
-			byte []imagesf = new byte[dimX*dimY]; 
+			byte[]imagesf = new byte[dimX*dimY]; 
 			for (int y = 0; y < dimY; y++) {
 				for (int x = 0; x < dimX; x++) {
 					//System.out.print(wrapped.getFloat()+" ");
 				//	images[j] = (byte) wrapped.getFloat();
-					imagesf[j] = images[y*dimX+dimY*80+x];
+					imagesf[j] =  (byte) images[y*(numbeOfVolumes-1)*x];
 					System.out.print(imagesf[j]);
 					System.out.println("");
 					j++;
@@ -123,7 +130,7 @@ public class FormatVTC {
 	
 	
 	
-	public byte[] getImages() {
+	public float[] getImages() {
 		return images;
 	}
 	public short getDimX() {
