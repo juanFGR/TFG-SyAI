@@ -88,25 +88,27 @@ public class FormatVTC {
 
 			setIndexEndOfHeader(wrapped.position());
 			printInfo();
-			System.out.println("-->"+(wrapped.limit() - wrapped.position())+" || "+getDimX()*getDimY()*getDimZ()*getNumbeOfVolumes()*2);
+			System.out.println("-->"+(wrapped.limit() - wrapped.position())+" || "+getDimX()*getDimY()*getDimZ()*getNumbeOfVolumes()*4);
 			
-			images = new float[getDimX()*getDimY()*getDimZ()*getNumbeOfVolumes()*2]; 
+			images = new float[getDimX()*getDimY()*getDimZ()*getNumbeOfVolumes()*4]; 
 			//save data since end of header to limit
 			int i=0;
 			while(wrapped.position()<=wrapped.limit()-4){
-				images[i] = (byte) wrapped.getFloat();
+				images[i] =  wrapped.getFloat();
 				i++;
 			}
 
-		
+		int t=0;
+		int z  =0;
 			//añadir condicion short or float
 			int j =0;
-			byte[]imagesf = new byte[dimX*dimY]; 
+			float[]imagesf = new float[dimX*dimY]; 
 			for (int y = 0; y < dimY; y++) {
 				for (int x = 0; x < dimX; x++) {
 					//System.out.print(wrapped.getFloat()+" ");
 				//	images[j] = (byte) wrapped.getFloat();
-					imagesf[j] =  (byte) images[y*(numbeOfVolumes-1)*x];
+					
+					imagesf[j] =   images[(z*dimY*dimX*numbeOfVolumes)+(y*numbeOfVolumes*dimX) +(numbeOfVolumes*x)+t];
 					System.out.print(imagesf[j]);
 					System.out.println("");
 					j++;
@@ -114,7 +116,7 @@ public class FormatVTC {
 				}
 			}
 
-			ImageProcessor u = new ByteProcessor( dimX,dimY, imagesf);
+			ImageProcessor u = new FloatProcessor( dimX,dimY, imagesf);
 		
 			ImagePlus q = new ImagePlus("", u);
 			q.updateImage();

@@ -65,7 +65,7 @@ public class Import_vtc_Sequence implements PlugIn{
 			a = new ByteProcessor(stack4d5d.formatVTC.getDimX(), stack4d5d.formatVTC.getDimY());
 			ImagePlus t = new ImagePlus("", a);
 		
-			t.show();
+		//	t.show();
 		}catch(Exception e){
 			e.printStackTrace();
 		}
