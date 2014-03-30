@@ -85,9 +85,9 @@ public class FormatVTC {
 
 
 			setIndexEndOfHeader(wrapped.position());
-			printInfo();
+			//printInfo();
 
-			System.out.println("-->"+(wrapped.limit() - wrapped.position())+" || "+getDimX()*getDimY()*getDimZ()*getNumbeOfVolumes()*4);
+		//	System.out.println("-->"+(wrapped.limit() - wrapped.position())+" || "+getDimX()*getDimY()*getDimZ()*getNumbeOfVolumes()*4);
 
 			images = new float[getDimX()*getDimY()*getDimZ()*getNumbeOfVolumes()*getDataTypeValues()]; 
 			//save data since end of header to limit
@@ -109,8 +109,8 @@ public class FormatVTC {
 					//	images[j] = (byte) wrapped.getFloat();
 
 					imagesf[j] =   images[(z*dimY*dimX*numbeOfVolumes)+(y*numbeOfVolumes*dimX) +(numbeOfVolumes*x)+t];
-					System.out.print(imagesf[j]);
-					System.out.println("");
+				/*	System.out.print(imagesf[j]);
+					System.out.println("");*/
 					j++;
 					//System.out.println();
 				}

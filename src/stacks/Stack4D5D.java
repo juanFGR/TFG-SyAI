@@ -24,8 +24,9 @@ public class Stack4D5D implements Stack4D5D_Interface {
 		
 		int t=5;
 		int z  =20;
-		
-		
+		System.out.println(height);
+		System.out.println(width);
+		System.out.println(frames);
 		int j =0;
 	//	float[]imagesf = new float[width*height]; 
 		for (int y = 0; y < height; y++) {
@@ -33,7 +34,7 @@ public class Stack4D5D implements Stack4D5D_Interface {
 				//System.out.print(wrapped.getFloat()+" ");
 				//	images[j] = (byte) wrapped.getFloat();
 
-				ImgVector[j] =   stackVector[(20*height*width*frames)+(y*frames*width) +(frames*x)+5];
+				ImgVector[j] =   stackVector[(slice*height*width*frames)+(y*frames*width) +(frames*x)+5];
 				System.out.print(ImgVector[j]);
 				System.out.println("");
 				j++;
@@ -44,19 +45,35 @@ public class Stack4D5D implements Stack4D5D_Interface {
 		return ImgVector;
 	}
 
-	public float[] getImgVectoryz(int slice) {
+	public float[] getImgVectoryz(int x) {
 		ImgVector = new float[width*getSlices()];
 		int iterator=0;
-		for (int j =0; j < height ; j++) {
+		/*for (int j =0; j < height ; j++) {
 			for (int i = 0; i < getSlices(); i++) {
 				int aux = width*height*j +width*(slice-1)+ i;
 				if(aux >0 && aux<stackVector.length)
 					ImgVector[iterator] = stackVector[aux];
 				iterator++;
 			}
+		}*/
+		int t=5;
+		//int z  =20;
+		int j =0;
+		
+		for (int y = 0; y < height; y++) {
+			for (int z = 0; z < slices; z++) {
+				//System.out.print(wrapped.getFloat()+" ");
+				//	images[j] = (byte) wrapped.getFloat();
+
+				ImgVector[j] =   stackVector[(z*height*width*frames)+(y*frames*width) +(frames*x)+5];
+				System.out.print(ImgVector[j]);
+				System.out.println("");
+				j++;
+				//System.out.println();
+			}
 		}
 
-		return transformacionInversa();
+		return ImgVector;
 	}
 
 
@@ -145,7 +162,7 @@ public class Stack4D5D implements Stack4D5D_Interface {
 		setWidth(formatVTC.getDimX());
 		setHeight(formatVTC.getDimY());
 		setSlices(formatVTC.getDimZ());
-		setFrames(formatVTC.getDimT());
+		setFrames(formatVTC.getNumbeOfVolumes());
 		if(getSlices()<=getWidth())
 			setFactorScale((double)((double)getSlices()/(double)getWidth()));	
 		else
