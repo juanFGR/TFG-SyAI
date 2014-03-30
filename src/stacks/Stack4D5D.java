@@ -10,25 +10,42 @@ import interfaces.Stack4D5D_Interface;
 
 
 public class Stack4D5D implements Stack4D5D_Interface {
-	private	byte []stackVector;
+	private	float []stackVector;
 	private int width;
 	private int height;
-	private byte []ImgVector;
+	private float []ImgVector;
 	private int slices;
 	private int frames;
 	private double factorScale;
 	public FormatVTC formatVTC;
 
-	public byte[] getImgVectorxy(int slice) {
-		ImgVector = new byte[width*height];
-		for (int i = 0; i < ImgVector.length; i++) {
-			ImgVector[i] = stackVector[width*height*(slice-1)+i];
+	public float[] getImgVectorxy(int slice) {
+		ImgVector = new float[width*height];
+		
+		int t=5;
+		int z  =20;
+		
+		
+		int j =0;
+	//	float[]imagesf = new float[width*height]; 
+		for (int y = 0; y < height; y++) {
+			for (int x = 0; x < width; x++) {
+				//System.out.print(wrapped.getFloat()+" ");
+				//	images[j] = (byte) wrapped.getFloat();
+
+				ImgVector[j] =   stackVector[(20*height*width*frames)+(y*frames*width) +(frames*x)+5];
+				System.out.print(ImgVector[j]);
+				System.out.println("");
+				j++;
+				//System.out.println();
+			}
 		}
+		
 		return ImgVector;
 	}
 
-	public byte[] getImgVectoryz(int slice) {
-		ImgVector = new byte[width*getSlices()];
+	public float[] getImgVectoryz(int slice) {
+		ImgVector = new float[width*getSlices()];
 		int iterator=0;
 		for (int j =0; j < height ; j++) {
 			for (int i = 0; i < getSlices(); i++) {
@@ -44,8 +61,8 @@ public class Stack4D5D implements Stack4D5D_Interface {
 
 
 
-	public byte[] getImgVectorxz(int slice) {
-		ImgVector = new byte[getSlices()*height];
+	public float[] getImgVectorxz(int slice) {
+		ImgVector = new float[getSlices()*height];
 		int iterator=0;
 		for (int j =0; j < height ; j++) {
 			for (int i = 0; i < getSlices(); i++) {
@@ -61,10 +78,10 @@ public class Stack4D5D implements Stack4D5D_Interface {
 	}
 
 
-	private byte[] transformacionInversa() {
+	private float[] transformacionInversa() {
 		int pos=0;
 		int posI=0;	
-		byte[] ImgVector2 = new byte[width*height];
+		float[] ImgVector2 = new float[width*height];
 		for (int i = 0; i < width; i++) {	
 			for (int j = 0; j < height; j++) {
 				pos=getposPixelInVector(width,height,i,j);
@@ -100,7 +117,7 @@ public class Stack4D5D implements Stack4D5D_Interface {
 			setFactorScale((double)((double)getWidth()/(double)getSlices()));
 
 		IJ.showMessage(getFactorScale()+"");
-		stackVector = new byte[ip.getStack().getSize()*width*height];
+		stackVector = new float[ip.getStack().getSize()*width*height];
 		ImageStack list = new ImageStack(width, height);
 		ImageProcessor is;
 		for (int i = 1; i <= ip.getStackSize(); i++) {
@@ -110,7 +127,7 @@ public class Stack4D5D implements Stack4D5D_Interface {
 
 		for (int i = 0; i < list.getSize(); i++) {
 
-			byte[] aux= (byte[])(list.getPixels(i+1));
+			float[] aux= (float[])(list.getPixels(i+1));
 			for (int j2 = 0; j2 < list.getHeight()*list.getWidth(); j2++) {
 
 				stackVector[list.getHeight()*list.getWidth()*i +j2] = aux[j2];
@@ -124,7 +141,15 @@ public class Stack4D5D implements Stack4D5D_Interface {
 
 	public Stack4D5D(byte[] data,String Formatter) {
 		formatVTC = new FormatVTC(data);
-	//	stackVector = Arrays.copyOf(formatVTC.getImages(), formatVTC.getImages().length);
+		stackVector = Arrays.copyOf(formatVTC.getImages(), formatVTC.getImages().length);
+		setWidth(formatVTC.getDimX());
+		setHeight(formatVTC.getDimY());
+		setSlices(formatVTC.getDimZ());
+		setFrames(formatVTC.getDimT());
+		if(getSlices()<=getWidth())
+			setFactorScale((double)((double)getSlices()/(double)getWidth()));	
+		else
+			setFactorScale((double)((double)getWidth()/(double)getSlices()));
 	
 	}
 
@@ -168,19 +193,19 @@ public class Stack4D5D implements Stack4D5D_Interface {
 		this.height = height;
 	}
 
-	public void setImgVector(byte[] imgVector) {
+	public void setImgVector(float[] imgVector) {
 		ImgVector = imgVector;
 	}
 
-	public byte[] getStackVector() {
+	public float[] getStackVector() {
 		return stackVector;
 	}
 
-	public void setStackVector(byte[] stackVector) {
+	public void setStackVector(float[] stackVector) {
 		this.stackVector = stackVector;
 	}
 
-	public byte[] getImgVector() {
+	public float[] getImgVector() {
 		return ImgVector;
 	}
 

@@ -16,16 +16,16 @@ public interface Stack4D5D_Interface {
 	double getFactorScale();
 	void setFactorScale(double factorScale) ;
 	
-	byte[] getImgVector();
-	void setImgVector(byte[] imgVector);
-	byte[] getStackVector();
-	void setStackVector(byte[] stackVector);
+	float[] getImgVector();
+	void setImgVector(float[] imgVector);
+	float[] getStackVector();
+	void setStackVector(float[] stackVector);
 	
 	
 	/* Metodos de la clase Stack4D5D */
-	byte[] getImgVectoryz(int slice);	
-	byte[] getImgVectorxz(int slice);	
-	byte[] getImgVectorxy(int slice);
+	float[] getImgVectoryz(int slice);	
+	float[] getImgVectorxz(int slice);	
+	float[] getImgVectorxy(int slice);
 
 	
 	int getposPixelInVector(int ancho,int alto, int x, int y);

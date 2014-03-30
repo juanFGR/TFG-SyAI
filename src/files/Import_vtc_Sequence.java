@@ -16,12 +16,12 @@ import java.nio.ByteOrder;
 import stacks.FormatVTC;
 import stacks.Stack4D5D;
 
-public class Import_vtc_Sequence implements PlugIn{
+public class Import_vtc_Sequence {
 
+	public byte[] bFile;
 
-
-	public void run(String arg) {
-		OpenDialog od = new OpenDialog("Open Image Sequence...", arg);
+	public void importSequence() {
+		OpenDialog od = new OpenDialog("Open Image Sequence...");
 		String directory = od.getDirectory();
 		String name = od.getFileName();
 		if (name==null)
@@ -53,17 +53,17 @@ public class Import_vtc_Sequence implements PlugIn{
 
 		File file = new File(path);
 
-		byte[] bFile = new byte[(int) file.length()];
+		bFile = new byte[(int) file.length()];
 
 		try {
 			//convert file into array of bytes
 			fileInputStream = new FileInputStream(file);
 			fileInputStream.read(bFile);
 			fileInputStream.close();
-			Stack4D5D stack4d5d = new Stack4D5D(bFile, "vtc");
+			/*Stack4D5D stack4d5d = new Stack4D5D(bFile, "vtc");
 			ImageProcessor a ;
 			a = new ByteProcessor(stack4d5d.formatVTC.getDimX(), stack4d5d.formatVTC.getDimY());
-			ImagePlus t = new ImagePlus("", a);
+			ImagePlus t = new ImagePlus("", a);*/
 		
 		//	t.show();
 		}catch(Exception e){

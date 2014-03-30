@@ -1,7 +1,6 @@
 package stacks;
 
 import ij.ImagePlus;
-import ij.process.ByteProcessor;
 import ij.process.FloatProcessor;
 import ij.process.ImageProcessor;
 
@@ -30,17 +29,16 @@ public class FormatVTC {
 	short dimY;
 	short dimZ;
 	short dimT;
-	
-	
+
+
 	int indexEndOfHeader;
 	float[] images;
 
 	public FormatVTC(byte[] data) {
-		
 
 		try {
 			//convert file into array of bytes
-	
+
 
 			ByteBuffer wrapped = ByteBuffer.wrap(data); // big-endian by default
 			wrapped.order(ByteOrder.LITTLE_ENDIAN);
@@ -84,30 +82,32 @@ public class FormatVTC {
 			setDimX();
 			setDimY();
 			setDimZ();
-			
+
 
 			setIndexEndOfHeader(wrapped.position());
 			printInfo();
+
 			System.out.println("-->"+(wrapped.limit() - wrapped.position())+" || "+getDimX()*getDimY()*getDimZ()*getNumbeOfVolumes()*4);
-			
-			images = new float[getDimX()*getDimY()*getDimZ()*getNumbeOfVolumes()*4]; 
+
+			images = new float[getDimX()*getDimY()*getDimZ()*getNumbeOfVolumes()*getDataTypeValues()]; 
 			//save data since end of header to limit
 			int i=0;
-			while(wrapped.position()<=wrapped.limit()-4){
+			while(wrapped.position()<=wrapped.limit()-getDataTypeValues()){
 				images[i] =  wrapped.getFloat();
 				i++;
 			}
 
-		int t=0;
-		int z  =0;
-			//añadir condicion short or float
+			int t=5;
+			int z  =20;
+
+
 			int j =0;
 			float[]imagesf = new float[dimX*dimY]; 
 			for (int y = 0; y < dimY; y++) {
 				for (int x = 0; x < dimX; x++) {
 					//System.out.print(wrapped.getFloat()+" ");
-				//	images[j] = (byte) wrapped.getFloat();
-					
+					//	images[j] = (byte) wrapped.getFloat();
+
 					imagesf[j] =   images[(z*dimY*dimX*numbeOfVolumes)+(y*numbeOfVolumes*dimX) +(numbeOfVolumes*x)+t];
 					System.out.print(imagesf[j]);
 					System.out.println("");
@@ -117,11 +117,12 @@ public class FormatVTC {
 			}
 
 			ImageProcessor u = new FloatProcessor( dimX,dimY, imagesf);
-		
+
 			ImagePlus q = new ImagePlus("", u);
 			q.updateImage();
 			q.updateAndDraw();
 			q.show();
+
 			//wrapped.get(images, dimX*dimY, dimX*dimY);
 			wrapped.clear(); //clear buffer
 			System.out.println("--->>>"+images.length);
@@ -129,9 +130,9 @@ public class FormatVTC {
 			e.printStackTrace();
 		}
 	}
-	
-	
-	
+
+
+
 	public float[] getImages() {
 		return images;
 	}
@@ -181,7 +182,7 @@ public class FormatVTC {
 		System.out.println("Dimension z: "+dimZ);
 		System.out.println("Index End of Header: "+indexEndOfHeader);
 	}
-	
+
 	public short getNumberOfversion() {
 		return numberOfversion;
 	}
@@ -210,7 +211,17 @@ public class FormatVTC {
 		return dataTypeValues;
 	}
 	public void setDataTypeValues(short dataTypeValues) {
-		this.dataTypeValues = dataTypeValues;
+		switch (dataTypeValues) {
+		case 1:	
+			this.dataTypeValues = 2;
+			break;
+		case 2:		
+			this.dataTypeValues = 4;
+			break;
+
+		default:
+			break;
+		}
 	}
 	public short getNumbeOfVolumes() {
 		return numbeOfVolumes;
@@ -285,5 +296,5 @@ public class FormatVTC {
 	public void setIndexEndOfHeader(int indexEndOfHeader) {
 		this.indexEndOfHeader = indexEndOfHeader;
 	}
-	
+
 }

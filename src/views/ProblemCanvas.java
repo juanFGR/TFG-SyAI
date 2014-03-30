@@ -2,7 +2,6 @@ package views;
 
 import ij.IJ;
 import ij.ImagePlus;
-import ij.process.ByteProcessor;
 import ij.process.FloatProcessor;
 import ij.process.ImageProcessor;
 
@@ -28,8 +27,14 @@ public class ProblemCanvas extends JPanel implements ChangeListener {
 	ImagePlus b ;
 	String typeView = null;
 
-	public ProblemCanvas() {
-		ip = new ImagePlus("", IJ.getImage().getStack());
+	public ProblemCanvas(Stack4D5D stack4d5d) {
+		datos = stack4d5d;
+
+
+
+		a = new FloatProcessor(datos.getWidth(), datos.getHeight(), datos.getImgVectorxy(1));
+		
+		ip = new ImagePlus("e",a);
 
 
 
@@ -61,11 +66,7 @@ public class ProblemCanvas extends JPanel implements ChangeListener {
     	 byte[] vector = new byte[2*aux.length];
     	 vector = (byte[])aux;*/
 
-		datos = new Stack4D5D(ip);
-
-
-
-		a = new ByteProcessor(datos.getWidth(), datos.getHeight(), datos.getImgVectorxy(1));
+		
 		b = new ImagePlus("", a);
 
 		//   b.show();
@@ -148,14 +149,14 @@ public class ProblemCanvas extends JPanel implements ChangeListener {
 
 		System.out.println("Udating to show frame "+frame); 
 		if(typeView.equals("XY")){
-			a = new ByteProcessor(datos.getWidth(), datos.getHeight(), datos.getImgVectorxy(frame+1));
+			a = new FloatProcessor(datos.getWidth(), datos.getHeight(), datos.getImgVectorxy(frame+1));
 
 		}  else if (typeView.equals("XZ")){
-			a = new ByteProcessor(datos.getWidth(), datos.getHeight(), datos.getImgVectorxz(frame+1));
+			a = new FloatProcessor(datos.getWidth(), datos.getHeight(), datos.getImgVectorxz(frame+1));
 
 		}
 		else if(typeView.equals("YZ")){
-			a = new ByteProcessor(datos.getWidth(), datos.getHeight(), datos.getImgVectoryz(frame+1));
+			a = new FloatProcessor(datos.getWidth(), datos.getHeight(), datos.getImgVectoryz(frame+1));
 
 
 		}
