@@ -35,8 +35,7 @@ public class Stack4D5D implements Stack4D5D_Interface {
 				//	images[j] = (byte) wrapped.getFloat();
 
 				ImgVector[j] =   stackVector[(slice*height*width*frames)+(y*frames*width) +(frames*x)+5];
-				System.out.print(ImgVector[j]);
-				System.out.println("");
+		
 				j++;
 				//System.out.println();
 			}
@@ -46,17 +45,9 @@ public class Stack4D5D implements Stack4D5D_Interface {
 	}
 
 	public float[] getImgVectoryz(int x) {
-		ImgVector = new float[width*getSlices()];
-		int iterator=0;
-		/*for (int j =0; j < height ; j++) {
-			for (int i = 0; i < getSlices(); i++) {
-				int aux = width*height*j +width*(slice-1)+ i;
-				if(aux >0 && aux<stackVector.length)
-					ImgVector[iterator] = stackVector[aux];
-				iterator++;
-			}
-		}*/
-		int t=5;
+		ImgVector = new float[width*height];
+
+		int t=1;
 		//int z  =20;
 		int j =0;
 		
@@ -65,28 +56,34 @@ public class Stack4D5D implements Stack4D5D_Interface {
 				//System.out.print(wrapped.getFloat()+" ");
 				//	images[j] = (byte) wrapped.getFloat();
 
-				ImgVector[j] =   stackVector[(z*height*width*frames)+(y*frames*width) +(frames*x)+5];
-				System.out.print(ImgVector[j]);
-				System.out.println("");
+				ImgVector[j] =   stackVector[(z*height*width*frames)+(y*frames*width) +(frames*x)+t];
+		
 				j++;
 				//System.out.println();
 			}
 		}
 
-		return ImgVector;
+		return transformacionInversa();
 	}
 
 
 
-	public float[] getImgVectorxz(int slice) {
-		ImgVector = new float[getSlices()*height];
-		int iterator=0;
-		for (int j =0; j < height ; j++) {
-			for (int i = 0; i < getSlices(); i++) {
-				int aux = width*height*i +width*j+(slice-1);
-				if(aux >0 && aux<stackVector.length)
-					ImgVector[iterator] = stackVector[aux];
-				iterator++;
+	public float[] getImgVectorxz(int y) {
+		ImgVector = new float[width*height];
+		
+		int t=1;
+		//int z  =20;
+		int j =0;
+		
+		for (int x = 0; x < width; x++) {
+			for (int z = 0; z < slices; z++) {
+				//System.out.print(wrapped.getFloat()+" ");
+				//	images[j] = (byte) wrapped.getFloat();
+
+				ImgVector[j] =   stackVector[(z*height*width*frames)+(y*frames*width) +(frames*x)+t];
+				
+				j++;
+				//System.out.println();
 			}
 		}
 
