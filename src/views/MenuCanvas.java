@@ -151,7 +151,7 @@ public class MenuCanvas extends JPanel implements ChangeListener {
 			a = new FloatProcessor(datos.getWidth(), datos.getHeight(), datos.getImgVectorxy(frame+1));
 
 		}  else if (typeView.equals("XZ")){
-			a = new FloatProcessor(datos.getWidth(), datos.getHeight(), datos.getImgVectorxz(frame+1));
+			a = new FloatProcessor(datos.getWidth(), datos.getSlices(), datos.getImgVectorxz(frame+1));
 
 		}
 		else if(typeView.equals("YZ")){

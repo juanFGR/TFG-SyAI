@@ -69,14 +69,14 @@ public class Stack4D5D implements Stack4D5D_Interface {
 
 
 	public float[] getImgVectorxz(int y) {
-		ImgVector = new float[width*height];
+		ImgVector = new float[width*slices];
 		
 		int t=1;
-		//int z  =20;
 		int j =0;
 		
-		for (int x = 0; x < width; x++) {
+		
 			for (int z = 0; z < slices; z++) {
+				for (int x = 0; x < width; x++) {
 				//System.out.print(wrapped.getFloat()+" ");
 				//	images[j] = (byte) wrapped.getFloat();
 
@@ -87,8 +87,8 @@ public class Stack4D5D implements Stack4D5D_Interface {
 			}
 		}
 
-
-		return transformacionInversa();
+return ImgVector;
+		//return transformacionInversa();
 	}
 
 
