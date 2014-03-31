@@ -1,12 +1,13 @@
 package views;
 
-import ij.IJ;
 import ij.ImagePlus;
+import ij.WindowManager;
 import ij.process.FloatProcessor;
 import ij.process.ImageProcessor;
 
 import javax.swing.AbstractButton;
 import javax.swing.ButtonModel;
+import javax.swing.JCheckBox;
 import javax.swing.JPanel;
 import javax.swing.JSlider;
 import javax.swing.event.ChangeEvent;
@@ -14,9 +15,7 @@ import javax.swing.event.ChangeListener;
 
 import stacks.Stack4D5D;
 
-import javax.swing.JCheckBox;
-
-public class ProblemCanvas extends JPanel implements ChangeListener {
+public class MenuCanvas extends JPanel implements ChangeListener {
 
 	private static final long serialVersionUID = 6042629063683509113L;
 
@@ -27,7 +26,7 @@ public class ProblemCanvas extends JPanel implements ChangeListener {
 	ImagePlus b ;
 	String typeView = null;
 
-	public ProblemCanvas(Stack4D5D stack4d5d) {
+	public MenuCanvas(Stack4D5D stack4d5d) {
 		datos = stack4d5d;
 
 
@@ -161,15 +160,28 @@ public class ProblemCanvas extends JPanel implements ChangeListener {
 
 		}
 		// ImageStack ss = new ImageStack(datos.getWidth(), datos.getHeight());
+		
+		System.out.println(a.getWidth() +"-------------------------------------->>>>>>>>>>>>>><");
+	
 		ImagePlus t = new ImagePlus("", a);
+		System.out.println(a.getWidth() +"++-------------------------------------->>>>>>>>>>>>>><");
+		
+		
+		
 		b.setImage(t);
 		//    b = new ImagePlus("", a);
 
 		//b.setSlice(frame+1);
-		b.updateImage();
-		b.updateAndDraw();
-		b.show();
+		
+		
+		//b.show();
 
+		b.getProcessor().setInterpolate(true); 
+		b.setProcessor( b.getProcessor().resize(datos.getWidth()*4, datos.getHeight()*4)); 
+		b.updateImage();
+		//b.updateAndDraw();
+		
+		b.show(); 
 
 	} 
 } 

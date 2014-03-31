@@ -85,7 +85,7 @@ public class FormatVTC {
 
 
 			setIndexEndOfHeader(wrapped.position());
-			//printInfo();
+			printInfo();
 
 		//	System.out.println("-->"+(wrapped.limit() - wrapped.position())+" || "+getDimX()*getDimY()*getDimZ()*getNumbeOfVolumes()*4);
 

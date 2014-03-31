@@ -36,7 +36,7 @@ public class Menu extends JFrame  {
 				
 				    
 				JFrame frame = new JFrame(); 
-				 ProblemCanvas a = new ProblemCanvas(core.stack4d5d);
+				 MenuCanvas a = new MenuCanvas(core.stack4d5d);
 				
 			        
 					frame.add(a); 
