@@ -23,9 +23,9 @@ public interface Stack4D5D_Interface {
 	
 	
 	/* Metodos de la clase Stack4D5D */
-	float[] getImgVectoryz(int slice);	
-	float[] getImgVectorxz(int slice);	
-	float[] getImgVectorxy(int slice);
+	float[] getImgVectoryz(int slice,int time);	
+	float[] getImgVectorxz(int slice,int time);	
+	float[] getImgVectorxy(int slice,int time);
 
 	
 	int getposPixelInVector(int ancho,int alto, int x, int y);

@@ -19,14 +19,9 @@ public class Stack4D5D implements Stack4D5D_Interface {
 	private double factorScale;
 	public FormatVTC formatVTC;
 
-	public float[] getImgVectorxy(int slice) {
+	public float[] getImgVectorxy(int slice, int time) {
 		ImgVector = new float[width*height];
 		
-		int t=5;
-		int z  =20;
-		System.out.println(height);
-		System.out.println(width);
-		System.out.println(frames);
 		int j =0;
 	//	float[]imagesf = new float[width*height]; 
 		for (int y = 0; y < height; y++) {
@@ -34,7 +29,7 @@ public class Stack4D5D implements Stack4D5D_Interface {
 				//System.out.print(wrapped.getFloat()+" ");
 				//	images[j] = (byte) wrapped.getFloat();
 
-				ImgVector[j] =   stackVector[(slice*height*width*frames)+(y*frames*width) +(frames*x)+5];
+				ImgVector[j] =   stackVector[(slice*height*width*frames)+(y*frames*width) +(frames*x)+time];
 		
 				j++;
 				//System.out.println();
@@ -44,10 +39,9 @@ public class Stack4D5D implements Stack4D5D_Interface {
 		return ImgVector;
 	}
 
-	public float[] getImgVectoryz(int x) {
+	public float[] getImgVectoryz(int x, int time) {
 		ImgVector = new float[width*height];
 
-		int t=1;
 		//int z  =20;
 		int j =0;
 		
@@ -56,7 +50,7 @@ public class Stack4D5D implements Stack4D5D_Interface {
 				//System.out.print(wrapped.getFloat()+" ");
 				//	images[j] = (byte) wrapped.getFloat();
 
-				ImgVector[j] =   stackVector[(z*height*width*frames)+(y*frames*width) +(frames*x)+t];
+				ImgVector[j] =   stackVector[(z*height*width*frames)+(y*frames*width) +(frames*x)+time];
 		
 				j++;
 				//System.out.println();
@@ -68,10 +62,9 @@ public class Stack4D5D implements Stack4D5D_Interface {
 
 
 
-	public float[] getImgVectorxz(int y) {
+	public float[] getImgVectorxz(int y, int time) {
 		ImgVector = new float[width*slices];
 		
-		int t=1;
 		int j =0;
 		
 		
@@ -80,7 +73,7 @@ public class Stack4D5D implements Stack4D5D_Interface {
 				//System.out.print(wrapped.getFloat()+" ");
 				//	images[j] = (byte) wrapped.getFloat();
 
-				ImgVector[j] =   stackVector[(z*height*width*frames)+(y*frames*width) +(frames*x)+t];
+				ImgVector[j] =   stackVector[(z*height*width*frames)+(y*frames*width) +(frames*x)+time];
 				
 				j++;
 				//System.out.println();
