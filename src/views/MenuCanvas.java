@@ -1,5 +1,6 @@
 package views;
 
+import ij.IJ;
 import ij.ImagePlus;
 import ij.WindowManager;
 import ij.process.FloatProcessor;
@@ -19,11 +20,19 @@ public class MenuCanvas extends JPanel implements ChangeListener {
 
 	private static final long serialVersionUID = 6042629063683509113L;
 
-	private ImagePlus ip = null; 
+	private ImagePlus ipxy = null; 
+	private ImagePlus ipyz = null; 
+	private ImagePlus ipxz = null; 
 	private JSlider slicesSliderxy = null; 
+	private JSlider slicesSlideryz = null; 
+	private JSlider slicesSliderxz = null; 
 	Stack4D5D datos;
-	ImageProcessor a ;
-	ImagePlus b ;
+	ImageProcessor xy ;
+	ImageProcessor yz ;
+	ImageProcessor xz ;
+	ImagePlus bxy ;
+	ImagePlus byz ;
+	ImagePlus bxz ;
 	String typeView = null;
 
 	public MenuCanvas(Stack4D5D stack4d5d) {
@@ -31,42 +40,57 @@ public class MenuCanvas extends JPanel implements ChangeListener {
 
 
 
-		a = new FloatProcessor(datos.getWidth(), datos.getHeight(), datos.getImgVectorxy(1));
+		xy = new FloatProcessor(datos.getWidth(), datos.getHeight(), datos.getImgVectorxy(1));
+		yz = new FloatProcessor(datos.getWidth(), datos.getHeight(), datos.getImgVectoryz(1));
+		xz = new FloatProcessor(datos.getWidth(), datos.getSlices(), datos.getImgVectorxz(1));
 		
-		ip = new ImagePlus("e",a);
+		ipxy = new ImagePlus("e",xy);
+		ipyz = new ImagePlus("eh",yz);
+		ipxz = new ImagePlus("ehh",xz);
 
+		
+		bxy = new ImagePlus("", xy);
+		bxz = new ImagePlus("", xz);
+		byz = new ImagePlus("", yz);
 
-
-		slicesSliderxy = new JSlider(JSlider.HORIZONTAL,0,ip.getStackSize()-1,0); 
+		slicesSliderxy = new JSlider(JSlider.HORIZONTAL,0,ipxy.getStackSize()-1,0); 
+		slicesSliderxy.setName("XY");
 		slicesSliderxy.setBounds(154, 2, 252, 26);
+		slicesSliderxy.setMaximum(20);
 		slicesSliderxy.addChangeListener(this); 
 
+		
+		slicesSlideryz = new JSlider(JSlider.HORIZONTAL,0,ipyz.getStackSize()-1,0); 
+		slicesSlideryz.setName("YZ");
+		slicesSlideryz.setBounds(154, 30, 252, 26);
+		slicesSlideryz.setMaximum(20);
+		slicesSlideryz.addChangeListener(this); 
+
+		
+	
+		
+		slicesSliderxz = new JSlider(JSlider.HORIZONTAL,0,ipxz.getStackSize()-1,0); 
+		slicesSliderxz.setName("XZ");
+		slicesSliderxz.setBounds(154, 70, 252, 26);
+		slicesSliderxz.setMaximum(20);
+		slicesSliderxz.addChangeListener(this); 
+
+		
+		
 		setLayout(null);
+
 		add(slicesSliderxy); 
-
-		JCheckBox chckbxXy = new JCheckBox("XY");
-		chckbxXy.setBounds(53, 5, 45, 23);
-		add(chckbxXy);
-		JCheckBox chckbxXz = new JCheckBox("XZ");
-		chckbxXz.setBounds(6, 5, 45, 23);
-		add(chckbxXz);
-
-		JCheckBox chckbxYz = new JCheckBox("YZ");
-		chckbxYz.setBounds(103, 5, 45, 23);
-		add(chckbxYz);
-
-
-
-
-		/*   add(slicesSliderxy,BorderLayout.SOUTH); 
+		add(slicesSlideryz); 
+		add(slicesSliderxz); 
+		slicesSliderxy.setMaximum(20);
+	
+			/*   add(slicesSliderxy,BorderLayout.SOUTH); 
         add(slicesSlideryz,BorderLayout.SOUTH); */
 
 		/*short[] aux= (short[])(ip.getProcessor().getPixels());
     	 byte[] vector = new byte[2*aux.length];
     	 vector = (byte[])aux;*/
 
-		
-		b = new ImagePlus("", a);
 
 		//   b.show();
 		//canvasxy = new ImageCanvas(b);
@@ -80,61 +104,6 @@ public class MenuCanvas extends JPanel implements ChangeListener {
 		 */
 
 
-
-
-		// Define ChangeListener
-		ChangeListener changeListener = new ChangeListener() {
-			public void stateChanged(ChangeEvent changeEvent) {
-				AbstractButton abstractButton =
-						(AbstractButton)changeEvent.getSource();
-				ButtonModel buttonModel = abstractButton.getModel();
-				boolean armed = buttonModel.isArmed();
-				boolean pressed = buttonModel.isPressed();
-				boolean selected = buttonModel.isSelected();
-				System.out.println("Changed: " + armed + "/" + pressed + "/" +
-						selected);
-				typeView="XY";
-			}
-		};
-
-		chckbxXy.addChangeListener(changeListener);
-
-
-		ChangeListener changeListener1 = new ChangeListener() {
-			public void stateChanged(ChangeEvent changeEvent) {
-				AbstractButton abstractButton =
-						(AbstractButton)changeEvent.getSource();
-				ButtonModel buttonModel = abstractButton.getModel();
-				boolean armed = buttonModel.isArmed();
-				boolean pressed = buttonModel.isPressed();
-				boolean selected = buttonModel.isSelected();
-				System.out.println("Changed1: " + armed + "/" + pressed + "/" +
-						selected);
-				slicesSliderxy.setMaximum(300);
-				typeView="XZ";
-			}
-		};
-
-		chckbxXz.addChangeListener(changeListener1);
-
-
-		ChangeListener changeListener2 = new ChangeListener() {
-			public void stateChanged(ChangeEvent changeEvent) {
-				AbstractButton abstractButton =
-						(AbstractButton)changeEvent.getSource();
-				ButtonModel buttonModel = abstractButton.getModel();
-				boolean armed = buttonModel.isArmed();
-				boolean pressed = buttonModel.isPressed();
-				boolean selected = buttonModel.isSelected();
-				System.out.println("Changed2: " + armed + "/" + pressed + "/" +
-						selected);
-				slicesSliderxy.setMaximum(300);
-				typeView="YZ";
-			}
-		};
-
-		chckbxYz.addChangeListener(changeListener2);
-
 	}
 
 
@@ -146,42 +115,57 @@ public class MenuCanvas extends JPanel implements ChangeListener {
 
 		int frame = ((JSlider)e.getSource()).getValue(); 
 
-		System.out.println("Udating to show frame "+frame); 
-		if(typeView.equals("XY")){
-			a = new FloatProcessor(datos.getWidth(), datos.getHeight(), datos.getImgVectorxy(frame+1));
-
-		}  else if (typeView.equals("XZ")){
-			a = new FloatProcessor(datos.getWidth(), datos.getSlices(), datos.getImgVectorxz(frame+1));
-
+		String name = ((JSlider)e.getSource()).getName(); 
+		
+		if(name.equals("XY")){
+			updatexy(frame);
+			
+		}  else if (name.equals("XZ")){
+			updatexz(frame);
+			
 		}
-		else if(typeView.equals("YZ")){
-			a = new FloatProcessor(datos.getWidth(), datos.getHeight(), datos.getImgVectoryz(frame+1));
-
-
+		else if(name.equals("YZ")){
+			updateyz(frame);
 		}
 		// ImageStack ss = new ImageStack(datos.getWidth(), datos.getHeight());
 		
-		System.out.println(a.getWidth() +"-------------------------------------->>>>>>>>>>>>>><");
 	
-		ImagePlus t = new ImagePlus("", a);
-		System.out.println(a.getWidth() +"++-------------------------------------->>>>>>>>>>>>>><");
 		
-		
-		
-		b.setImage(t);
-		//    b = new ImagePlus("", a);
+	
+	
 
-		//b.setSlice(frame+1);
-		
-		
-		//b.show();
+	}
 
-		b.getProcessor().setInterpolate(true); 
-		b.setProcessor( b.getProcessor().resize(datos.getWidth()*4, datos.getHeight()*4)); 
-		b.updateImage();
-		//b.updateAndDraw();
-		
-		b.show(); 
 
+	private void updatexy(int frame) {
+		xy = new FloatProcessor(datos.getWidth(), datos.getHeight(), datos.getImgVectorxy(frame+1));
+		ImagePlus txy = new ImagePlus("", xy);
+		bxy.setImage(txy);
+		bxy.getProcessor().setInterpolate(true); 
+		bxy.setProcessor( bxy.getProcessor().resize(datos.getWidth()*5, datos.getHeight()*5)); 
+		bxy.updateImage();		
+		bxy.show(); 
+	}
+
+
+	private void updateyz(int frame) {
+		yz = new FloatProcessor(datos.getWidth(), datos.getHeight(), datos.getImgVectoryz(frame+1));
+		ImagePlus tyz = new ImagePlus("", yz);
+		byz.setImage(tyz);
+		byz.getProcessor().setInterpolate(true); 
+		byz.setProcessor( byz.getProcessor().resize(datos.getWidth()*5, datos.getHeight()*5)); 
+		byz.updateImage();		
+		byz.show(); 
+	}
+
+
+	private void updatexz(int frame) {
+		xz = new FloatProcessor(datos.getWidth(), datos.getSlices(), datos.getImgVectorxz(frame+1));
+		ImagePlus txz = new ImagePlus("", xz);
+		bxz.setImage(txz);
+		bxz.getProcessor().setInterpolate(true); 
+		bxz.setProcessor( bxz.getProcessor().resize(datos.getWidth()*5, datos.getHeight()*5)); 
+		bxz.updateImage();		
+		bxz.show(); 
 	} 
 } 
