@@ -15,7 +15,9 @@ public class Core {
 		import_vtc_Sequence = new Import_vtc_Sequence();
 		import_vtc_Sequence.importSequence();
 		fileContent = Arrays.copyOf(import_vtc_Sequence.bFile, import_vtc_Sequence.bFile.length);
-		stack4d5d = new Stack4D5D(fileContent, "vtc");
+		formatVTC = new FormatVTC(fileContent);
+		
+		stack4d5d = new Stack4D5D(formatVTC, "vtc");
 	}
 
 

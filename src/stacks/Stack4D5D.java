@@ -146,8 +146,8 @@ return ImgVector;
 
 	}
 
-	public Stack4D5D(byte[] data,String Formatter) {
-		formatVTC = new FormatVTC(data);
+	public Stack4D5D(FormatVTC formatVTC,String Formatter) {
+		this.formatVTC = formatVTC;
 		stackVector = Arrays.copyOf(formatVTC.getImages(), formatVTC.getImages().length);
 		setWidth(formatVTC.getDimX());
 		setHeight(formatVTC.getDimY());

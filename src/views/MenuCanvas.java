@@ -1,5 +1,10 @@
 package views;
 
+import java.awt.BasicStroke;
+import java.awt.Color;
+import java.awt.Point;
+import java.awt.geom.GeneralPath;
+
 import ij.IJ;
 import ij.ImagePlus;
 import ij.WindowManager;
@@ -93,6 +98,10 @@ public class MenuCanvas extends JPanel implements ChangeListener {
 	//	int frame = ((JSlider)e.getSource()).getValue(); 
 		String name = ((JSlider)e.getSource()).getName(); 
 		
+		GeneralPath path = new GeneralPath();
+		Point p = new Point(10, 10);
+		drawCross(bxy, p, path);
+		bxy.setOverlay(path, Color.YELLOW, new BasicStroke(1));
 		if (name.equals("TIME")){
 			updatexy(slicesSliderxy.getValue(),slicesSlidertime.getValue());
 			updatexz(slicesSliderxz.getValue(),slicesSlidertime.getValue());
@@ -142,4 +151,21 @@ public class MenuCanvas extends JPanel implements ChangeListener {
 		bxz.updateImage();		
 		bxz.show(); 
 	} 
+	
+	
+	
+	
+	//Views 
+	
+	/** draws the crosses in the images */
+	void drawCross(ImagePlus imp, Point p, GeneralPath path) {
+		int width=imp.getWidth();
+		int height=imp.getHeight();
+		float x = p.x;
+		float y = p.y;
+		path.moveTo(0f, y);
+		path.lineTo(width, y);
+		path.moveTo(x, 0f);
+		path.lineTo(x, height);	
+	}
 } 
