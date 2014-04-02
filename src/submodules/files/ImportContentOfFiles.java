@@ -1,4 +1,4 @@
-package files;
+package submodules.files;
 
 import ij.IJ;
 import ij.ImagePlus;
@@ -16,11 +16,11 @@ import java.nio.ByteOrder;
 import stacks.FormatVTC;
 import stacks.Stack4D5D;
 
-public class Import_vtc_Sequence {
+public class ImportContentOfFiles {
 
 	public byte[] bFile;
 
-	public void importSequence() {
+	public void importSequence(String type) {
 		OpenDialog od = new OpenDialog("Open Image Sequence...");
 		String directory = od.getDirectory();
 		String name = od.getFileName();
@@ -37,11 +37,11 @@ public class Import_vtc_Sequence {
 		if (title.endsWith(":"))
 			title = title.substring(0, title.length()-1);
 
-		IJ.register(Import_vtc_Sequence.class);
+		IJ.register(ImportContentOfFiles.class);
 
 		String candidato="";
 		for (int i = 0; i < list.length; i++) {
-			if(list[i].substring(list[i].length()-5).contains(".vtc")){
+			if(list[i].substring(list[i].length()-5).contains("."+type)){
 				IJ.log(directory+list[i]);
 				candidato=list[i];
 			}

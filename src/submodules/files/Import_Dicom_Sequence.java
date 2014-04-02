@@ -1,4 +1,4 @@
-package files;
+package submodules.files;
 
 import ij.plugin.*;
 
@@ -49,8 +49,8 @@ public class Import_Dicom_Sequence implements PlugIn {
     private FileInfo fi;
     private String info1;
     
-    public void run(String arg) {
-        OpenDialog od = new OpenDialog("Open Image Sequence...", arg);
+    public void run(String type) {
+        OpenDialog od = new OpenDialog("Open Image Sequence...", type);
         String directory = od.getDirectory();
         String name = od.getFileName();
         if (name==null)

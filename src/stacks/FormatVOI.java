@@ -1,6 +1,7 @@
 package stacks;
 
 import java.awt.Color;
+import java.nio.ByteBuffer;
 
 public class FormatVOI {
 	
@@ -21,9 +22,11 @@ Color colorOfVOI;
 int nrOfVoxels;
 int nrOfVOIVTCs;
 
-public FormatVOI() {
-
+public FormatVOI(byte[] fileContent) {
+	ByteBuffer wrapped = ByteBuffer.wrap(fileContent);
+		System.out.println(wrapped.get());
 }
+
 public int getFileVersion() {
 	return fileVersion;
 }

@@ -5,8 +5,6 @@ import ij.IJ;
 import javax.swing.JFrame;
 
 import core.Core;
-import files.Import_Dicom_Sequence;
-import files.Import_vtc_Sequence;
 
 import java.awt.Button;
 import java.awt.event.ActionListener;
@@ -35,16 +33,16 @@ public class Menu extends JFrame  {
 			public void actionPerformed(ActionEvent e) {
 				
 				    
-				JFrame frame = new JFrame(); 
+				/*JFrame frame = new JFrame(); */
 				 MenuCanvas a = new MenuCanvas(core.stack4d5d);
 				
-			        
+			      /*
 					frame.add(a); 
 			        frame.setSize(400,100); 
 			        
 			        
 			        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); 
-			        frame.setVisible(true); 
+			        frame.setVisible(true); */
 				
 			}
 		});
