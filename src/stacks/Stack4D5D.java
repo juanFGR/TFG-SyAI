@@ -1,25 +1,24 @@
 package stacks;
-import java.util.Arrays;
-
 import ij.IJ;
 import ij.ImagePlus;
 import ij.ImageStack;
 import ij.process.ImageProcessor;
-import interfaces.Stack4D5D_Interface;
+
+import java.util.Arrays;
 
 
 
-public class Stack4D5D implements Stack4D5D_Interface {
-	private	float []stackVector;
-	private int width;
-	private int height;
-	private float []ImgVector;
-	private int slices;
-	private int frames;
-	private double factorScale;
-	public FormatVTC formatVTC;
+public class Stack4D5D {
+	private static	float []stackVector;
+	private static int width;
+	private static int height;
+	private static float []ImgVector;
+	private static int slices;
+	private static int frames;
+	private static double factorScale;
+	public static FormatVTC formatVTC;
 
-	public float[] getImgVectorxy(int slice, int time) {
+	public static float[] getImgVectorxy(int slice, int time) {
 		ImgVector = new float[width*height];
 		
 		int j =0;
@@ -39,7 +38,7 @@ public class Stack4D5D implements Stack4D5D_Interface {
 		return ImgVector;
 	}
 
-	public float[] getImgVectoryz(int x, int time) {
+	public static float[] getImgVectoryz(int x, int time) {
 		ImgVector = new float[width*height];
 
 		//int z  =20;
@@ -62,7 +61,7 @@ public class Stack4D5D implements Stack4D5D_Interface {
 
 
 
-	public float[] getImgVectorxz(int y, int time) {
+	public static float[] getImgVectorxz(int y, int time) {
 		ImgVector = new float[width*slices];
 		
 		int j =0;
@@ -85,7 +84,7 @@ return ImgVector;
 	}
 
 
-	private float[] transformacionInversa() {
+	private static float[] transformacionInversa() {
 		int pos=0;
 		int posI=0;	
 		float[] ImgVector2 = new float[width*height];
@@ -109,11 +108,11 @@ return ImgVector;
 
 
 
-	public int getposPixelInVector(int ancho,int alto, int x, int y) {
+	public static int getposPixelInVector(int ancho,int alto, int x, int y) {
 		return ancho*y-(ancho-x);
 	}
 
-	public Stack4D5D(ImagePlus ip) {
+	public static void  Initialize(ImagePlus ip) {
 		setWidth(ip.getWidth());
 		setHeight(ip.getHeight());
 		setSlices(ip.getStackSize());
@@ -146,8 +145,8 @@ return ImgVector;
 
 	}
 
-	public Stack4D5D(FormatVTC formatVTC,String Formatter) {
-		this.formatVTC = formatVTC;
+	public static void  Initialize(FormatVTC _formatVTC,String Formatter) {
+		formatVTC = _formatVTC;
 		stackVector = Arrays.copyOf(formatVTC.getImages(), formatVTC.getImages().length);
 		setWidth(formatVTC.getDimX());
 		setHeight(formatVTC.getDimY());
@@ -168,60 +167,60 @@ return ImgVector;
 
 
 
-	public int getSlices() {
+	public static int getSlices() {
 		return slices;
 	}
 
-	public void setSlices(int slices) {
-		this.slices = slices;
+	public static void setSlices(int _slices) {
+		slices = _slices;
 	}
 
-	public int getFrames() {
+	public static int getFrames() {
 		return frames;
 	}
 
-	public void setFrames(int frames) {
-		this.frames = frames;
+	public static void setFrames(int _frames) {
+		frames = _frames;
 	}
 
-	public int getWidth() {
+	public static int getWidth() {
 		return width;
 	}
 
-	public void setWidth(int width) {
-		this.width = width;
+	public static void setWidth(int _width) {
+		width = _width;
 	}
 
-	public int getHeight() {
+	public static int getHeight() {
 		return height;
 	}
 
-	public void setHeight(int height) {
-		this.height = height;
+	public static void setHeight(int _height) {
+		height = _height;
 	}
 
-	public void setImgVector(float[] imgVector) {
+	public static void setImgVector(float[] imgVector) {
 		ImgVector = imgVector;
 	}
 
-	public float[] getStackVector() {
+	public static float[] getStackVector() {
 		return stackVector;
 	}
 
-	public void setStackVector(float[] stackVector) {
-		this.stackVector = stackVector;
+	public static void setStackVector(float[] _stackVector) {
+		stackVector = _stackVector;
 	}
 
-	public float[] getImgVector() {
+	public static float[] getImgVector() {
 		return ImgVector;
 	}
 
-	public double getFactorScale() {
+	public static double getFactorScale() {
 		return factorScale;
 	}
 
-	public void setFactorScale(double factorScale) {
-		this.factorScale = factorScale;
+	public static void setFactorScale(double _factorScale) {
+		factorScale = _factorScale;
 	}
 
 }

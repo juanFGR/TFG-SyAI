@@ -33,16 +33,16 @@ public class Menu extends JFrame  {
 			public void actionPerformed(ActionEvent e) {
 				
 				    
-				/*JFrame frame = new JFrame(); */
-				 MenuCanvas a = new MenuCanvas(core.stack4d5d);
+				JFrame frame = new JFrame(); 
+				 MenuCanvas a = new MenuCanvas();
 				
-			      /*
+			      
 					frame.add(a); 
 			        frame.setSize(400,100); 
 			        
 			        
 			        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); 
-			        frame.setVisible(true); */
+			        frame.setVisible(true); 
 				
 			}
 		});

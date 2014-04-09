@@ -10,7 +10,6 @@ import submodules.files.ImportContentOfFiles;
 public class Core {
 	public FormatVTC formatVTC;
 	public FormatVOI formatVOI;
-	public Stack4D5D stack4d5d;
 	ImportContentOfFiles import_vtc_Sequence;
 	byte[] fileContent;
 
@@ -22,7 +21,7 @@ public class Core {
 	/*	import_vtc_Sequence.importSequence("voi");
 		fileContent = Arrays.copyOf(import_vtc_Sequence.bFile, import_vtc_Sequence.bFile.length);
 		formatVOI= new FormatVOI(fileContent); */
-		stack4d5d = new Stack4D5D(formatVTC, "vtc");
+		 Stack4D5D.Initialize(formatVTC, "vtc");
 	}
 
 
