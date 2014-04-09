@@ -109,7 +109,8 @@ return ImgVector;
 
 
 	public static int getposPixelInVector(int ancho,int alto, int x, int y) {
-		return ancho*y-(ancho-x);
+		
+		return ancho*y-(ancho+x);
 	}
 
 	public static void  Initialize(ImagePlus ip) {

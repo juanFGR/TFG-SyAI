@@ -97,20 +97,17 @@ byz.show();
 		// Someone has dragged the image slice slider.  We need 
 		// to update the frame being shown 
 		if (IJ.getImage().getRoi() != null){
-			System.out.println(IJ.getImage().getRoi().getXBase());
-			System.out.println(IJ.getImage().getRoi().getImage().getWidth());
-			System.out.println(IJ.getImage().getRoi().getImage().getWidth()+IJ.getImage().getRoi().getXBase());
-		}
-		/*	//voi_media = new VOI_media(Stack4D5D.getStackVector(),IJ.getImage().getRoi());
-		ImagePlus tt = new ImagePlus(); tt.setImage(IJ.getImage().getRoi().getImage());
-		tt.show();
+			
+			voi_media = new VOI_media(IJ.getImage().getRoi());
+	//	ImagePlus tt = new ImagePlus(); tt.setImage(IJ.getImage().getRoi().getImage());
+	//	tt.show();
 
-		}*/
+		}
 	//	int frame = ((JSlider)e.getSource()).getValue(); 
 		String name = ((JSlider)e.getSource()).getName(); 
 
 		GeneralPath path = new GeneralPath();
-		Point p = new Point(slicesSlideryz.getValue()*5, slicesSliderxz.getValue()*5);
+		Point p = new Point(slicesSlideryz.getValue() , slicesSliderxz.getValue() );
 		drawCross(bxy, p, path);
 		bxy.setOverlay(path, Color.YELLOW, new BasicStroke(1));
 		if (name.equals("TIME")){
@@ -136,18 +133,19 @@ byz.show();
 		ImagePlus txy = new ImagePlus("", xy);
 		bxy.setImage(txy);
 		bxy.getProcessor().setInterpolate(true); 
-		bxy.setProcessor( bxy.getProcessor().resize(Stack4D5D.getWidth()*5, Stack4D5D.getHeight()*5)); 
+		bxy.setProcessor( bxy.getProcessor().resize(Stack4D5D.getWidth()*TAM_RESIZE , Stack4D5D.getHeight()*TAM_RESIZE )); 
 		bxy.updateImage();		
 		
 	}
 
+	private final int TAM_RESIZE = 5;
 
 	private void updateyz(int frame,int time) {
 		yz = new FloatProcessor(Stack4D5D.getWidth(), Stack4D5D.getHeight(), Stack4D5D.getImgVectoryz(frame+1,time));
 		ImagePlus tyz = new ImagePlus("", yz);
 		byz.setImage(tyz);
 		byz.getProcessor().setInterpolate(true); 
-		byz.setProcessor( byz.getProcessor().resize(Stack4D5D.getWidth()*5, Stack4D5D.getHeight()*5)); 
+		byz.setProcessor( byz.getProcessor().resize(Stack4D5D.getWidth() *TAM_RESIZE , Stack4D5D.getHeight()*TAM_RESIZE )); 
 		byz.updateImage();		
 	
 	}
@@ -158,7 +156,7 @@ byz.show();
 		ImagePlus txz = new ImagePlus("", xz);
 		bxz.setImage(txz);
 		bxz.getProcessor().setInterpolate(true); 
-		bxz.setProcessor( bxz.getProcessor().resize(Stack4D5D.getWidth()*5, Stack4D5D.getHeight()*5)); 
+		bxz.setProcessor( bxz.getProcessor().resize(Stack4D5D.getWidth()*TAM_RESIZE , Stack4D5D.getHeight()*TAM_RESIZE )); 
 		bxz.updateImage();		
 	}
 
