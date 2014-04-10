@@ -101,8 +101,8 @@ byz.show();
 			System.out.println(IJ.getImage().getRoi().getImage().getWidth());
 			System.out.println(IJ.getImage().getRoi().getImage().getWidth()+IJ.getImage().getRoi().getXBase());
 		}
-		/*	//voi_media = new VOI_media(Stack4D5D.getStackVector(),IJ.getImage().getRoi());
-		ImagePlus tt = new ImagePlus(); tt.setImage(IJ.getImage().getRoi().getImage());
+		//voi_media = new VOI_media(IJ.getImage().getRoi());
+/*		ImagePlus tt = new ImagePlus(); tt.setImage(IJ.getImage().getRoi().getImage());
 		tt.show();
 
 		}*/
