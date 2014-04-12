@@ -111,8 +111,15 @@ byz.show();
 
 		GeneralPath path = new GeneralPath();
 		Point p = new Point(slicesSlideryz.getValue()*5, slicesSliderxz.getValue()*5);
-		drawCross(bxy, p, path);
+		drawXYCross(bxy, p, path);
+		GeneralPath path2 = new GeneralPath();
+		drawXZCross(bxz, p, path2);
+		GeneralPath path3 = new GeneralPath();
+		drawYZCross(byz, p, path3);
+		
 		bxy.setOverlay(path, Color.YELLOW, new BasicStroke(1));
+		byz.setOverlay(path2, Color.YELLOW, new BasicStroke(1));
+		bxz.setOverlay(path3, Color.YELLOW, new BasicStroke(1));
 		if (name.equals("TIME")){
 			updatexy(slicesSliderxy.getValue(),slicesSlidertime.getValue());
 			updatexz(slicesSliderxz.getValue(),slicesSlidertime.getValue());
@@ -166,9 +173,23 @@ byz.show();
 
 
 	//Views 
-
 	/** draws the crosses in the images */
-	void drawCross(ImagePlus imp, Point p, GeneralPath path) {
+	void drawXZCross(ImagePlus imp, Point p, GeneralPath path) {
+		int height=imp.getHeight();
+		float x = p.x;
+		path.moveTo(x, 0f);
+		path.lineTo(x, height);	
+	}
+	/** draws the crosses in the images */
+	void drawYZCross(ImagePlus imp, Point p, GeneralPath path) {
+		int width=imp.getWidth();
+		float y = p.y;
+		path.moveTo(0f, y);
+		path.lineTo(width, y);
+	}
+	
+	/** draws the crosses in the images */
+	void drawXYCross(ImagePlus imp, Point p, GeneralPath path) {
 		int width=imp.getWidth();
 		int height=imp.getHeight();
 		float x = p.x;
