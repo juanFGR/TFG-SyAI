@@ -1,17 +1,13 @@
 package submodules.histograms;
 
+import ij.ImagePlus;
+import ij.gui.Roi;
+
 import java.awt.Point;
 import java.awt.geom.GeneralPath;
-import java.util.ArrayList;
 import java.util.Arrays;
 
 import stacks.Stack4D5D;
-import ij.ImagePlus;
-import ij.gui.HistogramWindow;
-import ij.gui.Roi;
-import ij.plugin.Histogram;
-import ij.process.FloatProcessor;
-import ij.process.ImageProcessor;
 
 public class VOI_media {
 
