@@ -2,7 +2,7 @@ Trabajo de Fin de Grado (TFG)
 =========
 
 
-Segmentación y annálisis de Imágenes
+Segmentación y análisis de Imágenes
 ----
 
   - **Driector de proyecto:** González Fernández, Albano
