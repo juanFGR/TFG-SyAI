@@ -59,8 +59,8 @@ bxz.show();
 byz.show();
 
 bxy.getWindow().setLocation(10, 10);
-bxz.getWindow().setLocation(bxy.getWidth()+35, 10);
-byz.getWindow().setLocation(10, bxy.getHeight()+65);
+byz.getWindow().setLocation(bxy.getWidth()+35, 10);
+bxz.getWindow().setLocation(10, bxy.getHeight()+65);
 		slicesSliderxy = new JSlider(JSlider.HORIZONTAL,0,ipxy.getStackSize()-1,0); 
 		slicesSliderxy.setName("XY");
 		slicesSliderxy.setBounds(154, 2, 252, 26);
@@ -198,14 +198,14 @@ byz.getWindow().setLocation(10, bxy.getHeight()+65);
 
 	//Views 
 	/** draws the crosses in the images */
-	void drawXZCross(ImagePlus imp, Point p, GeneralPath path) {
+	void drawYZCross(ImagePlus imp, Point p, GeneralPath path) {
 		int height=imp.getHeight();
 		float x = p.x;
 		path.moveTo(x, 0f);
 		path.lineTo(x, height);	
 	}
 	/** draws the crosses in the images */
-	void drawYZCross(ImagePlus imp, Point p, GeneralPath path) {
+	void drawXZCross(ImagePlus imp, Point p, GeneralPath path) {
 		int width=imp.getWidth();
 		float y = p.y;
 		path.moveTo(0f, y);
