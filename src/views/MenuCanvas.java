@@ -1,14 +1,16 @@
 package views;
 
-import java.awt.BasicStroke;
-import java.awt.Color;
-import java.awt.Point;
-import java.awt.geom.GeneralPath;
-
 import ij.IJ;
 import ij.ImagePlus;
 import ij.process.FloatProcessor;
 import ij.process.ImageProcessor;
+import ij3d.Content;
+import ij3d.Image3DUniverse;
+
+import java.awt.BasicStroke;
+import java.awt.Color;
+import java.awt.Point;
+import java.awt.geom.GeneralPath;
 
 import javax.swing.JPanel;
 import javax.swing.JSlider;
@@ -16,7 +18,8 @@ import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
 import stacks.Stack4D5D;
-import submodules.histograms.VOI_media;
+import submodules.plugins.VOI_media;
+
 
 public class MenuCanvas extends JPanel implements ChangeListener {
 
@@ -49,10 +52,14 @@ public class MenuCanvas extends JPanel implements ChangeListener {
 		updatexz(0,0);
 		updateyz(0,0);
 		
-		
+	
 bxy.show();
 bxz.show();
 byz.show();
+
+bxy.getWindow().setLocation(10, 10);
+bxz.getWindow().setLocation(bxy.getWidth()+35, 10);
+byz.getWindow().setLocation(10, bxy.getHeight()+65);
 		slicesSliderxy = new JSlider(JSlider.HORIZONTAL,0,ipxy.getStackSize()-1,0); 
 		slicesSliderxy.setName("XY");
 		slicesSliderxy.setBounds(154, 2, 252, 26);
@@ -87,6 +94,19 @@ byz.show();
 		add(slicesSlideryz); 
 		add(slicesSliderxz); 
 		add(slicesSlidertime); 
+
+		
+		
+		// Create a universe and show it
+		
+	/*	Image3DUniverse univ = new Image3DUniverse();
+	
+		univ.show();
+	
+		
+		// Add the image as an isosurface
+		
+		Content c = univ.addVoltex(bxy);*/
 
 
 	}

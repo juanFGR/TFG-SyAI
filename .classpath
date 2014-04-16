@@ -3,5 +3,17 @@
 	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/IJ"/>
+	<classpathentry kind="lib" path="dependency/jfreechart/jcommon-1.0.21.jar"/>
+	<classpathentry kind="lib" path="dependency/jfreechart/jfreechart-1.0.17.jar"/>
+	<classpathentry kind="lib" path="dependency/jfreechart/jfreechart-1.0.17-experimental.jar"/>
+	<classpathentry kind="lib" path="dependency/jfreechart/jfreechart-1.0.17-swt.jar"/>
+	<classpathentry kind="lib" path="dependency/jfreechart/hamcrest-core-1.3.jar"/>
+	<classpathentry kind="lib" path="dependency/jfreechart/jfreesvg-1.4.jar"/>
+	<classpathentry kind="lib" path="dependency/jfreechart/junit-4.11.jar"/>
+	<classpathentry kind="lib" path="dependency/jfreechart/orsoncharts-1.0-eval.jar"/>
+	<classpathentry kind="lib" path="dependency/jfreechart/orsonpdf-1.3-eval.jar"/>
+	<classpathentry kind="lib" path="dependency/jfreechart/servlet.jar"/>
+	<classpathentry kind="lib" path="dependency/jfreechart/swtgraphics2d.jar"/>
+	<classpathentry kind="lib" path="dependency/ImageJ_3D_Viewer.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

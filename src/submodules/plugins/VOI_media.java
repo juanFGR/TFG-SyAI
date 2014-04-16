@@ -1,11 +1,20 @@
-package submodules.histograms;
+package submodules.plugins;
 
+import ij.IJ;
 import ij.ImagePlus;
 import ij.gui.Roi;
 
+import java.awt.Font;
 import java.awt.Point;
 import java.awt.geom.GeneralPath;
+import java.awt.geom.Rectangle2D;
+import java.awt.image.BufferedImage;
 import java.util.Arrays;
+
+import org.jfree.chart.ChartFactory;
+import org.jfree.chart.JFreeChart;
+import org.jfree.chart.plot.PiePlot;
+import org.jfree.data.general.DefaultPieDataset;
 
 import stacks.Stack4D5D;
 
@@ -48,7 +57,26 @@ public class VOI_media {
 			drawCross(a,p,path);
 		}
 		
-		a.show();
+		
+		   DefaultPieDataset dataset = new DefaultPieDataset();
+	                dataset.setValue("Apples", 63);
+	                dataset.setValue("Oranges", 36);
+
+	                JFreeChart chart = ChartFactory.createPieChart("Comparison", dataset, true, true, false);
+	                PiePlot pie = (PiePlot)chart.getPlot();
+	                pie.setLabelFont(new Font("SansSerif", Font.PLAIN, 12));
+	                pie.setLabelGap(0.05);
+	                pie.setCircular(true);
+
+	                ImagePlus imp = IJ.createImage("Comparison", "RGB", 512, 512, 1);
+	                BufferedImage image = imp.getBufferedImage();
+	                chart.draw(image.createGraphics(),
+	                        new Rectangle2D.Float(0, 0, imp.getWidth(), imp.getHeight()));
+	                imp.setImage(image);
+	                imp.show();
+	                
+		        
+		        a.show();
 		/*FloatProcessor g = new FloatProcessor(numberOfPixels, 1, media);
 		ImagePlus e = new ImagePlus("ww", g);
 		HistogramWindow a = new HistogramWindow(e);*/
@@ -66,5 +94,20 @@ public class VOI_media {
 		path.lineTo(width, y);
 		path.moveTo(x, 0f);
 		path.lineTo(x, height);	
+		
+		
 	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 }
