@@ -9,6 +9,7 @@ import ij3d.Image3DUniverse;
 
 import java.awt.BasicStroke;
 import java.awt.Color;
+import java.awt.Label;
 import java.awt.Point;
 import java.awt.geom.GeneralPath;
 
@@ -90,13 +91,16 @@ byz.getWindow().setLocation(10, bxy.getHeight()+65);
 
 		setLayout(null);
 
+		add(new Label("Plano XY"));
 		add(slicesSliderxy); 
+		add(new Label("Plano YZ"));
 		add(slicesSlideryz); 
+		add(new Label("Plano XZ"));
 		add(slicesSliderxz); 
+		add(new Label("Tiempo"));
 		add(slicesSlidertime); 
-
-		
-		
+	validate();
+		repaint();
 		// Create a universe and show it
 		
 	/*	Image3DUniverse univ = new Image3DUniverse();
@@ -158,10 +162,10 @@ byz.getWindow().setLocation(10, bxy.getHeight()+65);
 	private void updatexy(int frame,int time) {
 		xy = new FloatProcessor(Stack4D5D.getWidth(), Stack4D5D.getHeight(), Stack4D5D.getImgVectorxy(frame+1,time));
 		ImagePlus txy = new ImagePlus("", xy);
+		txy.getProcessor().setInterpolate(true); 
+		txy.setProcessor( txy.getProcessor().resize(Stack4D5D.getWidth()*TAM_RESIZE , Stack4D5D.getHeight()*TAM_RESIZE )); 
 		bxy.setImage(txy);
-		bxy.getProcessor().setInterpolate(true); 
-		bxy.setProcessor( bxy.getProcessor().resize(Stack4D5D.getWidth()*TAM_RESIZE , Stack4D5D.getHeight()*TAM_RESIZE )); 
-		bxy.updateImage();		
+		bxy.repaintWindow();		
 		
 	}
 
@@ -170,10 +174,11 @@ byz.getWindow().setLocation(10, bxy.getHeight()+65);
 	private void updateyz(int frame,int time) {
 		yz = new FloatProcessor(Stack4D5D.getWidth(), Stack4D5D.getHeight(), Stack4D5D.getImgVectoryz(frame+1,time));
 		ImagePlus tyz = new ImagePlus("", yz);
+		
+		tyz.getProcessor().setInterpolate(true); 
+		tyz.setProcessor( tyz.getProcessor().resize(Stack4D5D.getWidth() *TAM_RESIZE , Stack4D5D.getHeight()*TAM_RESIZE )); 
 		byz.setImage(tyz);
-		byz.getProcessor().setInterpolate(true); 
-		byz.setProcessor( byz.getProcessor().resize(Stack4D5D.getWidth() *TAM_RESIZE , Stack4D5D.getHeight()*TAM_RESIZE )); 
-		byz.updateImage();		
+		byz.repaintWindow();		
 	
 	}
 
@@ -181,10 +186,11 @@ byz.getWindow().setLocation(10, bxy.getHeight()+65);
 	private void updatexz(int frame,int time) {
 		xz = new FloatProcessor(Stack4D5D.getWidth(), Stack4D5D.getSlices(), Stack4D5D.getImgVectorxz(frame+1,time));
 		ImagePlus txz = new ImagePlus("", xz);
+		
+		txz.getProcessor().setInterpolate(true); 
+		txz.setProcessor( txz.getProcessor().resize(Stack4D5D.getWidth()*TAM_RESIZE , Stack4D5D.getHeight()*TAM_RESIZE )); 
 		bxz.setImage(txz);
-		bxz.getProcessor().setInterpolate(true); 
-		bxz.setProcessor( bxz.getProcessor().resize(Stack4D5D.getWidth()*TAM_RESIZE , Stack4D5D.getHeight()*TAM_RESIZE )); 
-		bxz.updateImage();		
+		bxz.repaintWindow();		
 	}
 
 

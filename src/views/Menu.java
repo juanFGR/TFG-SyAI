@@ -38,8 +38,8 @@ public class Menu extends JFrame  {
 				
 			      
 					frame.add(a); 
-			        frame.setSize(400,100); 
-			        
+			        frame.setBounds(600, 0, 400, 200);
+				
 			        
 			        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); 
 			        frame.setVisible(true); 
