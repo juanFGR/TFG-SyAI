@@ -2,15 +2,19 @@ package views;
 
 import ij.IJ;
 import ij.ImagePlus;
+import ij.gui.ImageCanvas;
+import ij.gui.ImageWindow;
 import ij.process.FloatProcessor;
 import ij.process.ImageProcessor;
-import ij3d.Content;
-import ij3d.Image3DUniverse;
 
 import java.awt.BasicStroke;
 import java.awt.Color;
+import java.awt.Event;
 import java.awt.Label;
 import java.awt.Point;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
+import java.awt.event.MouseMotionListener;
 import java.awt.geom.GeneralPath;
 
 import javax.swing.JPanel;
@@ -19,22 +23,21 @@ import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
 import stacks.Stack4D5D;
-import submodules.plugins.VOI_media;
 
 
-public class MenuCanvas extends JPanel implements ChangeListener {
+public class OrthogonalPerspective extends JPanel implements ChangeListener, MouseListener, MouseMotionListener {
 
 	private static final long serialVersionUID = 6042629063683509113L;
-	VOI_media voi_media;
+	
 	private ImagePlus ipxy, ipyz, ipxz = null; 
 	private JSlider slicesSliderxy, slicesSlideryz, slicesSliderxz, slicesSlidertime = null;
 
 	ImageProcessor xy, yz, xz ;
 	ImagePlus bxy , byz, bxz ;
 	String typeView = null;
+	ImageCanvas canvas;
 
-
-	public MenuCanvas() {
+	public OrthogonalPerspective() {
 
 		xy = new FloatProcessor(Stack4D5D.getWidth(), Stack4D5D.getHeight(), Stack4D5D.getImgVectorxy(1,0));
 		yz = new FloatProcessor(Stack4D5D.getWidth(), Stack4D5D.getHeight(), Stack4D5D.getImgVectoryz(1,0));
@@ -54,9 +57,14 @@ public class MenuCanvas extends JPanel implements ChangeListener {
 		updateyz(0,0);
 		
 	
+	
 bxy.show();
 bxz.show();
 byz.show();
+ImageWindow win = bxy.getWindow();
+canvas = win.getCanvas();
+canvas.addMouseListener(this);
+canvas.addMouseMotionListener(this);
 
 bxy.getWindow().setLocation(10, 10);
 byz.getWindow().setLocation(bxy.getWidth()+35, 10);
@@ -120,13 +128,7 @@ bxz.getWindow().setLocation(10, bxy.getHeight()+65);
 	public void stateChanged(ChangeEvent e) {
 		// Someone has dragged the image slice slider.  We need 
 		// to update the frame being shown 
-		if (IJ.getImage().getRoi() != null){
-			
-			voi_media = new VOI_media(IJ.getImage().getRoi());
-	//	ImagePlus tt = new ImagePlus(); tt.setImage(IJ.getImage().getRoi().getImage());
-	//	tt.show();
 
-		}
 	//	int frame = ((JSlider)e.getSource()).getValue(); 
 		String name = ((JSlider)e.getSource()).getName(); 
 
@@ -223,4 +225,44 @@ bxz.getWindow().setLocation(10, bxy.getHeight()+65);
 		path.moveTo(x, 0f);
 		path.lineTo(x, height);	
 	}
+
+
+	public void mousePressed(MouseEvent e) {
+		int x = e.getX();
+		int y = e.getY();
+		int offscreenX = canvas.offScreenX(x);
+		int offscreenY = canvas.offScreenY(y);
+		IJ.log("Mouse pressed: "+offscreenX+","+offscreenY+modifiers(e.getModifiers()));
+		//IJ.log("Right button: "+((e.getModifiers()&Event.META_MASK)!=0));
+	}
+
+	public void mouseReleased(MouseEvent e) {
+		IJ.log("mouseReleased: ");
+	}
+	
+	public void mouseDragged(MouseEvent e) {
+		int x = e.getX();
+		int y = e.getY();
+		int offscreenX = canvas.offScreenX(x);
+		int offscreenY = canvas.offScreenY(y);
+		IJ.log("Mouse dragged: "+offscreenX+","+offscreenY+modifiers(e.getModifiers()));
+	}
+
+	public static String modifiers(int flags) {
+		String s = " [ ";
+		if (flags == 0) return "";
+		if ((flags & Event.SHIFT_MASK) != 0) s += "Shift ";
+		if ((flags & Event.CTRL_MASK) != 0) s += "Control ";
+		if ((flags & Event.META_MASK) != 0) s += "Meta (right button) ";
+		if ((flags & Event.ALT_MASK) != 0) s += "Alt ";
+		s += "]";
+		if (s.equals(" [ ]"))
+			s = " [no modifiers]";
+		return s;
+	}
+
+	public void mouseExited(MouseEvent e) {}
+	public void mouseClicked(MouseEvent e) {}	
+	public void mouseEntered(MouseEvent e) {}
+	public void mouseMoved(MouseEvent e) {}
 } 
