@@ -5,6 +5,8 @@ import ij.gui.HistogramWindow;
 import ij.gui.Roi;
 import ij.process.FloatProcessor;
 
+import java.awt.BasicStroke;
+import java.awt.Color;
 import java.awt.Point;
 import java.awt.geom.GeneralPath;
 import java.util.Arrays;
@@ -15,6 +17,7 @@ import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
 import stacks.Stack4D5D;
+import submodules.histograms.ChartWithSliders;
 
 public class VOI_media extends JPanel implements ChangeListener {
 
@@ -53,8 +56,8 @@ public class VOI_media extends JPanel implements ChangeListener {
 
     void drawCross(ImagePlus imp, Point p, GeneralPath path) {
 
-	path.moveTo( p.x, 0f);
-	path.lineTo( p.x, p.y);	
+	path.moveTo( p.x, imp.getHeight());
+	path.lineTo( p.x, imp.getHeight()-p.y);	
 
 
     }
@@ -78,21 +81,24 @@ public class VOI_media extends JPanel implements ChangeListener {
 	    }
 	}
 	Panel_Window t = new Panel_Window(a);
-
+ChartWithSliders lll = new ChartWithSliders();
+lll.initialize();
 	for (int i = 0; i < media.length; i++) {
 	    media[i]= media[i]/slices;
 	}
-	
-	/*FloatProcessor g = new FloatProcessor(numberOfPixels,1, media);
-	a.setImage(new ImagePlus("ww", g));*/
+	float [] auxi = new float[media.length*500];
+	Arrays.fill(auxi, 0);
+	FloatProcessor g = new FloatProcessor(media.length,500,auxi);
+	a.setImage(new ImagePlus("ww", g));
 	//a.getCanvas().setSize(300, 300);
 	
 	for (int i = 0; i < media.length; i++) {
 	    p =  new Point(i , (int)media[i]);
 	    drawCross(a,p,path);
-	    a.repaintWindow();
-	}
+	    a.setOverlay(path, Color.YELLOW, new BasicStroke(1));
 	
+	}
+	    a.repaintWindow();
 	FFT transform = new FFT(128);
 	double[] imaginaria = new double[128];
 	double[] real =  new double[128];
