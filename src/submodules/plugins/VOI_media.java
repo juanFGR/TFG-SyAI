@@ -25,7 +25,7 @@ public class VOI_media extends JPanel implements ChangeListener {
     int numberOfPixels;
     int slices;
     int firstPixel;
-    float[] media;
+    double[] media;
     ImagePlus a;
     HistogramWindow hist;
     private JSlider slicesSlider;
@@ -37,7 +37,7 @@ public class VOI_media extends JPanel implements ChangeListener {
 	System.out.println((roi.getImage().getHeight()/5));
 	slices = Stack4D5D.getSlices();
 	firstPixel = Stack4D5D.getposPixelInVector(Stack4D5D.getWidth(), Stack4D5D.getHeight(), (int)roi.getXBase()/5, (int)roi.getYBase()/5);
-	media = new float[numberOfPixels];
+	media = new double[numberOfPixels];
 	a = new ImagePlus("e");
 	slicesSlider = new JSlider(JSlider.HORIZONTAL,0,Stack4D5D.getFrames()-1,0); 
 	slicesSlider.setName("XY");
@@ -45,6 +45,7 @@ public class VOI_media extends JPanel implements ChangeListener {
 	slicesSlider.setMaximum(Stack4D5D.getFrames()-1);
 	slicesSlider.addChangeListener(this); 
 	add(slicesSlider);
+	
     }
 
     GeneralPath path = new GeneralPath();
@@ -84,20 +85,41 @@ public class VOI_media extends JPanel implements ChangeListener {
 	
 	/*FloatProcessor g = new FloatProcessor(numberOfPixels,1, media);
 	a.setImage(new ImagePlus("ww", g));*/
-	a.getCanvas().setSize(300, 300);
+	//a.getCanvas().setSize(300, 300);
 	
 	for (int i = 0; i < media.length; i++) {
 	    p =  new Point(i , (int)media[i]);
 	    drawCross(a,p,path);
 	    a.repaintWindow();
 	}
-
-
+	
+	FFT transform = new FFT(128);
+	double[] imaginaria = new double[128];
+	double[] real =  new double[128];
+	 Arrays.fill(imaginaria, 0);
+	 Arrays.fill(real, 0);
+	 for (int i = 0; i < real.length; i++) {
+	    real[i] = media[i];
+	}
+	 	transform.fft(real, imaginaria);
+	 	transform.lanza();
 
     }
 
 
-
+    public int nextPotencia2(int n) 
+    { 
+	int cont =0;
+        while(cont<n){
+            cont+=2;
+        }
+       /* System.out.println(Math.pow(cont, 2));
+        if(Math.pow(cont, 2) == n)
+            return (int) Math.pow(cont, 2); 
+        else
+            return (int) Math.pow(cont+1, 2);*/
+        return cont;
+    } 
 
 
 
