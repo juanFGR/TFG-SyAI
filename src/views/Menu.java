@@ -4,6 +4,7 @@ import ij.IJ;
 
 import javax.swing.JFrame;
 
+import submodules.histograms.ChartWithSliders;
 import submodules.plugins.VOI_media;
 import core.Core;
 
@@ -60,16 +61,16 @@ public class Menu extends JFrame  {
 		
 
 		
-		JFrame frame = new JFrame(); 
-		VOI_media a = new VOI_media(IJ.getImage().getRoi());
+		/*JFrame frame = new JFrame(); */
+		VOI_media a = new VOI_media();
+		a.initialize(IJ.getImage().getRoi());
 
-
-		frame.add(a); 
+		/*frame.add(a); 
 		frame.setBounds(600, 0, 400, 200);
 
 
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); 
-		frame.setVisible(true); 
+		frame.setVisible(true); */
 		}
 
 	    }

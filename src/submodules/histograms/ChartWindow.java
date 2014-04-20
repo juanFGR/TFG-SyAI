@@ -7,6 +7,8 @@ import java.awt.datatransfer.*;
 import java.util.*;
 
 import javax.swing.JSlider;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 
 import ij.IJ;
 import ij.ImageListener;
@@ -27,7 +29,7 @@ import ij.io.SaveDialog;
 * @author Wayne Rasband
 */
 public class ChartWindow extends ImageWindow implements ActionListener, ClipboardOwner,
-	MouseListener, MouseMotionListener, KeyListener, ImageListener, Runnable {
+	MouseListener, MouseMotionListener, KeyListener,ChangeListener, ImageListener, Runnable {
 
 	/** Display points using a circle 5 pixels in diameter. */
 	public static final int CIRCLE = 0;
@@ -56,7 +58,7 @@ public class ChartWindow extends ImageWindow implements ActionListener, Clipboar
 	private static final int INTERPOLATE = 8;
 	private static final int NO_GRID_LINES = 16;
 
-	private JSlider slicesSlider;
+	public static final JSlider slicesSlider = new JSlider();
 	private Button list, save, copy, live;
 	private Label coordinates;
 	private static String defaultDirectory = null;
@@ -134,6 +136,8 @@ public class ChartWindow extends ImageWindow implements ActionListener, Clipboar
 		draw();
 		//addComponentListener(this);
 	}
+	
+	
 
 	/** Called by the constructor to generate the image the plot will be drawn on.
 		This is a static method because constructors cannot call instance methods. */
@@ -211,7 +215,6 @@ public class ChartWindow extends ImageWindow implements ActionListener, Clipboar
 		coordinates.setFont(new Font("Monospaced", Font.PLAIN, 12));
 		coordinates.setBackground(new Color(220, 220, 220));
 		buttons.add(coordinates);
-		slicesSlider = new JSlider();
 		slicesSlider.setSize(50, 20);
 		slicesSlider.setValue(0);
 		slicesSlider.setMaximum(20);
@@ -607,6 +610,12 @@ public class ChartWindow extends ImageWindow implements ActionListener, Clipboar
 		Font font = live.getFont();
 		live.setFont(new Font(font.getName(), Font.PLAIN, font.getSize()));
 		live.setForeground(Color.black);
+	}
+
+	@Override
+	public void stateChanged(ChangeEvent e) {
+	    // TODO Auto-generated method stub
+	    
 	}
 	
 }
