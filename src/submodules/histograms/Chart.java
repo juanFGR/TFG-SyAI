@@ -2,11 +2,12 @@ package submodules.histograms;
 
 import java.awt.*;
 import java.util.*;
+
 import ij.*;
-import ij.gui.*;
 import ij.process.*;
 import ij.util.*;
 import ij.plugin.filter.Analyzer;
+import ij.gui.ImageWindow;
 import ij.macro.Interpreter;
 import ij.measure.Calibration;
 
@@ -111,7 +112,15 @@ public class Chart {
 	private int plotWidth = ChartWindow.plotWidth;
 	private int plotHeight = ChartWindow.plotHeight;
 	private boolean multiplePlots;
-	private boolean drawPending;
+	public boolean drawPending;
+	public boolean isDrawPending() {
+	    return drawPending;
+	}
+
+	public void setDrawPending(boolean drawPending) {
+	    this.drawPending = drawPending;
+	}
+
 	private PlotMaker plotMaker;
 	
 	/** keeps a reference to all of the	 that is going to be plotted. */
@@ -157,6 +166,31 @@ public class Chart {
 		this.xLabel = xLabel;
 		this.yLabel = yLabel;
 		this.flags = flags;
+		storedData = new ArrayList();
+		if ((xValues==null || xValues.length==0) && yValues!=null) {
+			xValues = new float[yValues.length];
+			for (int i=0; i<yValues.length; i++)
+				xValues[i] = i;
+		}
+		if (xValues==null) {
+			xValues = new float[0];
+			yValues = new float[0];
+		} else
+			store(xValues, yValues);
+		this.xValues = xValues;
+		this.yValues = yValues;		
+
+		double[] a = Tools.getMinMax(xValues);
+		xMin=a[0]; xMax=a[1];
+		a = Tools.getMinMax(yValues);
+		yMin=a[0]; yMax=a[1];
+		fixedYScale = false;
+		nPoints = Math.min(xValues.length, yValues.length);
+		drawPending = true;
+	}
+	
+	
+	public void initialize( float[] xValues, float[] yValues) {
 		storedData = new ArrayList();
 		if ((xValues==null || xValues.length==0) && yValues!=null) {
 			xValues = new float[yValues.length];
@@ -1185,10 +1219,23 @@ public class Chart {
 			IJ.selectWindow(imp.getID());
 		return pw;
 	}
+	public void show2() {
+		 draw();
+		 if (Prefs.useInvertingLut && (ip instanceof ByteProcessor) && !Interpreter.isBatchMode() && IJ.getInstance()!=null) {
+			ip.invertLut();
+			ip.invert();
+		}
+		WindowManager.getCurrentImage().setProcessor(ip); 
+			WindowManager.repaintImageWindows();
 		
+		getImagePlus().repaintWindow();
+		
+	}
 	/** Stores plot	 into an ArrayList	to be used 
 		 when a plot window	 wants to 'createlist'. */
-	private void store(float[] xvalues, float[] yvalues) {
+	public void store(float[] xvalues, float[] yvalues) {
+	    if (storedData == null)
+		storedData = new ArrayList();
 		storedData.add(xvalues);
 		storedData.add(yvalues);
 	}

@@ -33,15 +33,15 @@ public class VOI_media implements ChangeListener  {
     double[] media;
     ImagePlus a;
     HistogramWindow hist;
-
+    ChartWithSliders oop;
     
 
     public void initialize( Roi roi) {
-	numberOfPixels = (roi.getWidthOfRoi()/5) * (roi.getHeightOfRoi()/5);
-	System.out.println((roi.getImage().getWidth()/5));
-	System.out.println((roi.getImage().getHeight()/5));
+	numberOfPixels = (roi.getWidthOfRoi()/Stack4D5D.TAM_RESIZE) * (roi.getHeightOfRoi()/Stack4D5D.TAM_RESIZE);
+	System.out.println((roi.getImage().getWidth()/Stack4D5D.TAM_RESIZE));
+	System.out.println((roi.getImage().getHeight()/Stack4D5D.TAM_RESIZE));
 	slices = Stack4D5D.getSlices();
-	firstPixel = Stack4D5D.getposPixelInVector(Stack4D5D.getWidth(), Stack4D5D.getHeight(), (int)roi.getXBase()/5, (int)roi.getYBase()/5);
+	firstPixel = Stack4D5D.getposPixelInVector(Stack4D5D.getWidth(), Stack4D5D.getHeight(), (int)roi.getXBase()/Stack4D5D.TAM_RESIZE, (int)roi.getYBase()/Stack4D5D.TAM_RESIZE);
 	media = new double[numberOfPixels];
 	a = new ImagePlus("e");
 	//ChartWindow.slicesSlider = new JSlider(JSlider.HORIZONTAL,0,Stack4D5D.getFrames()-1,0); 
@@ -54,12 +54,10 @@ public class VOI_media implements ChangeListener  {
 	for (int i = 0; i < slices; i++) {
 
 	    tmp = Arrays.copyOf (Stack4D5D.getImgVectorxy(i,5 ),Stack4D5D.getImgVectorxy(i,5).length );
-	    System.out.println("//////////////"+tmp.length);
-	    System.out.println("\\\\\\\\\\\\\\"+firstPixel);
-	    System.out.println("\\\\\\\\\\\\\\"+numberOfPixels);
+	    System.out.println("//////////////\\\\\\\\\\\\\\\\\\\\");
 
 	    for (int j = 0; j < numberOfPixels; j++) {
-		media[j] += tmp[j]; 
+		media[j] += tmp[firstPixel+j]; 
 
 	    }
 	}
@@ -70,7 +68,7 @@ public class VOI_media implements ChangeListener  {
 	    media[i]= 10000-(media[i]/slices);
 	}
 
-	ChartWithSliders oop = new ChartWithSliders();
+	 oop = new ChartWithSliders();
 	oop.initialize(media);
 	float [] auxi = new float[media.length*500];
 	
@@ -97,7 +95,6 @@ public class VOI_media implements ChangeListener  {
 	    real[i] = media[i];
 	}
 	 	transform.fft(real, imaginaria);
-	 	transform.lanza();
 
     }
 
@@ -114,7 +111,7 @@ public class VOI_media implements ChangeListener  {
 
     @Override
     public void stateChanged(ChangeEvent e) {
-
+	media = new double[numberOfPixels];
 
 	float[] tmp;
 
@@ -126,7 +123,7 @@ public class VOI_media implements ChangeListener  {
 	    System.out.println("\\\\\\\\\\\\\\"+numberOfPixels);
 
 	    for (int j = 0; j < numberOfPixels; j++) {
-		media[j] += tmp[j]; 
+		media[j] += tmp[firstPixel+j]; 
 
 	    }
 	}
@@ -159,8 +156,8 @@ public class VOI_media implements ChangeListener  {
 	    real[i] = media[i];
 	}
 	 	transform.fft(real, imaginaria);
-	 	transform.lanza();
-
+	 	Arrays.fill(media, 0.0);
+	 	oop.change(media);
     }
 
 

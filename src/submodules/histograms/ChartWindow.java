@@ -58,7 +58,7 @@ public class ChartWindow extends ImageWindow implements ActionListener, Clipboar
 	private static final int INTERPOLATE = 8;
 	private static final int NO_GRID_LINES = 16;
 
-	public static final JSlider slicesSlider = new JSlider();
+	public static  JSlider slicesSlider = new JSlider();
 	private Button list, save, copy, live;
 	private Label coordinates;
 	private static String defaultDirectory = null;
@@ -218,7 +218,7 @@ public class ChartWindow extends ImageWindow implements ActionListener, Clipboar
 		slicesSlider.setSize(50, 20);
 		slicesSlider.setValue(0);
 		slicesSlider.setMaximum(20);
-		
+		slicesSlider.addChangeListener(this);
 		buttons.add(slicesSlider);
 		add(buttons);
 		plot.draw();
@@ -257,6 +257,7 @@ public class ChartWindow extends ImageWindow implements ActionListener, Clipboar
 	*/
 	public void mouseMoved(int x, int y) {
 		super.mouseMoved(x, y);
+		
 		if (plot!=null && plot.frame!=null && coordinates!=null) {
 			String coords = plot.getCoordinates(x,y) + blankLabel;
 			coordinates.setText(coords.substring(0, blankLabel.length()));
@@ -615,7 +616,6 @@ public class ChartWindow extends ImageWindow implements ActionListener, Clipboar
 	@Override
 	public void stateChanged(ChangeEvent e) {
 	    // TODO Auto-generated method stub
-	    
 	}
 	
 }

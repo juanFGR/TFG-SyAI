@@ -1,20 +1,10 @@
 package submodules.files;
 
 import ij.IJ;
-import ij.ImagePlus;
-import ij.io.FileInfo;
 import ij.io.OpenDialog;
-import ij.plugin.PlugIn;
-import ij.process.ByteProcessor;
-import ij.process.ImageProcessor;
 
 import java.io.File;
 import java.io.FileInputStream;
-import java.nio.ByteBuffer;
-import java.nio.ByteOrder;
-
-import stacks.FormatVTC;
-import stacks.Stack4D5D;
 
 public class ImportContentOfFiles {
 

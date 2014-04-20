@@ -4,7 +4,6 @@ import ij.IJ;
 
 import javax.swing.JFrame;
 
-import submodules.histograms.ChartWithSliders;
 import submodules.plugins.VOI_media;
 import core.Core;
 
