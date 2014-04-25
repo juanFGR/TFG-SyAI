@@ -154,7 +154,7 @@ package submodules.plugins;
 	  
 	  
 	    // Test the FFT to make sure it's working
-	    public static void main(String[] args) {
+	    public  void lanza() {
 	      int N = 8;
 	  
 	      FFT fft = new FFT(N);

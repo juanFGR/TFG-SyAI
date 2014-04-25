@@ -29,6 +29,7 @@ public class Stack4D5D {
     private static int frames;
     private static double factorScale;
     public static FormatVTC formatVTC;
+    public static int TAM_RESIZE = 5;
 
 
     /**
