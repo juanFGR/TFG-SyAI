@@ -44,9 +44,9 @@ public class VOI_media  {
     private void saveInBuffer(int i,float _media) {
 	int cont = 0;	
 
-	  
-	    cont +=1;
-	
+
+	cont +=1;
+
     }
 
 
@@ -91,7 +91,7 @@ public class VOI_media  {
 	numberOfPixels = (roi.getWidthOfRoi()/Stack4D5D.TAM_RESIZE) * (roi.getHeightOfRoi()/Stack4D5D.TAM_RESIZE);
 	frames = Stack4D5D.getFrames();
 	firstPixel = Stack4D5D.getposPixelInVector(Stack4D5D.getWidth(), Stack4D5D.getHeight(), (int)roi.getXBase()/Stack4D5D.TAM_RESIZE, (int)roi.getYBase()/Stack4D5D.TAM_RESIZE);
-
+	int []roiSizes = {roi.getWidthOfRoi()/Stack4D5D.TAM_RESIZE,roi.getHeightOfRoi()/Stack4D5D.TAM_RESIZE};
 	buffer = new double[Stack4D5D.getFrames()];
 	a = new ImagePlus("e");
 
@@ -101,15 +101,19 @@ public class VOI_media  {
 	//add(slicesSlider);
 	//ChartWindow.slicesSlider.addChangeListener(this);
 	float[] tmp;
-	
-	
+
+
 	for (int j = 0; j < Stack4D5D.getFrames(); j++) {
 	    float _media = 0;
 	    for (int i = 0; i < Stack4D5D.getSlices(); i++) {
+		
 		tmp = Arrays.copyOf (Stack4D5D.getImgVectorxy(i,j ),Stack4D5D.getImgVectorxy(i,j).length );
-		for (int z = 0; z < numberOfPixels; z++) {
-		    _media += tmp[firstPixel+z]; 
+		for (int y = 0; y < roiSizes[1]; y++) {
+		    for (int x = firstPixel+(roiSizes[0]*y)+(Stack4D5D.getWidth()-(firstPixel+roiSizes[0])); x < firstPixel+(roiSizes[0]*y)+(Stack4D5D.getWidth()-(firstPixel+roiSizes[0]))+roiSizes[0]; x++) {	    
+			_media += tmp[x]; 
+		    }
 		}
+		tmp = null;
 	    }
 	    _media = _media/(numberOfPixels*Stack4D5D.getSlices());
 	    buffer[j] = _media;
@@ -139,7 +143,7 @@ public class VOI_media  {
 	FloatProcessor g = new FloatProcessor(media.length,500,auxi);
 	a.setImage(new ImagePlus("ww", g));
 	//a.getCanvas().setSize(300, 300);
-*//*
+	 *//*
 	for (int i = 0; i < media.length; i++) {
 	    p =  new Point(i , (int)media[i]);
 	    drawCross(a,p,path);
@@ -156,7 +160,7 @@ public class VOI_media  {
 	    real[i] = buffer[i];
 	}
 	transform.fft(real, imaginaria);
-*/
+	 */
 	FFT transform = new FFT(8);
 	ChartWithSliders oopi = new ChartWithSliders();
 	transform.lanza();
