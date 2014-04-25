@@ -1,17 +1,18 @@
-
 Trabajo de Fin de Grado (TFG)
 =========
 
 
-Segmentación y análisis de Imágenes
+SegmentaciÃ³n y anÃ¡lisis de ImÃ¡genes
 ----
 
-  - **Driector de proyecto:** González Fernández, Albano
-  - **Co-director:**  Pérez Darias, Juan Carlos
+  - **Driector de proyecto:** GonzÃ¡lez FernÃ¡ndez, Albano
+  - **Co-director:**  PÃ©rez Darias, Juan Carlos
 
-En este proyecto se propone el diseño e implementación de herramientas software que ayuden a los especialistas en el estudio de la respuesta cerebral a la interpretación de resonancias magnéticas funcionales. Para ello se utilizarán técnicas de procesamiento y análisis de señales e imágenes, aplicadas a imágenes neuronales 3D y 4D.  
+En este proyecto se propone el diseÃ±o e implementaciÃ³n de herramientas software que ayuden a los especialistas en el estudio de la respuesta cerebral a la interpretaciÃ³n de resonancias magnÃ©ticas funcionales. Para ello se utilizarÃ¡n tÃ©cnicas de procesamiento y anÃ¡lisis de seÃ±ales e imÃ¡genes, aplicadas a imÃ¡genes neuronales 3D y 4D.  
 
-> Realizado por: Juan Francisco González Ramos
+[Wiki del proyecto](https://github.com/juanFGR/TFG-SyAI/wiki)
+
+> Realizado por: Juan Francisco GonzÃ¡lez Ramos
 
 License
 ----
