@@ -69,31 +69,27 @@ public class OrthogonalPerspective extends JPanel implements ChangeListener, Mou
 	bxy.getWindow().setLocation(10, 10);
 	byz.getWindow().setLocation(bxy.getWidth()+35, 10);
 	bxz.getWindow().setLocation(10, bxy.getHeight()+65);
-	slicesSliderxy = new JSlider(JSlider.HORIZONTAL,0,ipxy.getStackSize()-1,0); 
+	slicesSliderxy = new JSlider(JSlider.HORIZONTAL,0,Stack4D5D.getSlices(),0); 
 	slicesSliderxy.setName("XY");
 	slicesSliderxy.setBounds(154, 2, 252, 26);
-	slicesSliderxy.setMaximum(Stack4D5D.getSlices());
 	slicesSliderxy.addChangeListener(this); 
 
 
-	slicesSlideryz = new JSlider(JSlider.HORIZONTAL,0,ipyz.getStackSize()-1,0); 
+	slicesSlideryz = new JSlider(JSlider.HORIZONTAL,0,Stack4D5D.getWidth(),0); 
 	slicesSlideryz.setName("YZ");
 	slicesSlideryz.setBounds(154, 30, 252, 26);
-	slicesSlideryz.setMaximum(Stack4D5D.getWidth());
 	slicesSlideryz.addChangeListener(this); 
 
 
-	slicesSliderxz = new JSlider(JSlider.HORIZONTAL,0,ipxz.getStackSize()-1,0); 
+	slicesSliderxz = new JSlider(JSlider.HORIZONTAL,0,Stack4D5D.getHeight(),0); 
 	slicesSliderxz.setName("XZ");
 	slicesSliderxz.setBounds(154, 70, 252, 26);
-	slicesSliderxz.setMaximum(Stack4D5D.getHeight());
 	slicesSliderxz.addChangeListener(this); 
 
 
-	slicesSlidertime = new JSlider(JSlider.HORIZONTAL,0,ipxz.getStackSize()-1,0); 
+	slicesSlidertime = new JSlider(JSlider.HORIZONTAL,0,Stack4D5D.getFrames(),0); 
 	slicesSlidertime.setName("TIME");
 	slicesSlidertime.setBounds(154, 100, 252, 26);
-	slicesSlidertime.setMaximum(50);
 	slicesSlidertime.addChangeListener(this); 
 
 

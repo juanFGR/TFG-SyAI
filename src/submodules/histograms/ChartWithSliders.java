@@ -2,36 +2,45 @@ package submodules.histograms;
 
 
 
+import ij.util.Tools;
+
 import java.awt.Color;
 import java.awt.Font;
 import java.util.Arrays;
 
-import javax.swing.event.ChangeEvent;
-import javax.swing.event.ChangeListener;
+import stacks.Stack4D5D;
+
 
 public class ChartWithSliders   {
 
-
-
     Chart   plot;
-    public void initialize(double[] auxi) {
+    public Chart getPlot() {
+        return plot;
+    }
+
+    public void setPlot(Chart plot) {
+        this.plot = plot;
+    }
+
+    public void initialize(double[] auxi, int length) {
 
 	float[] x;
-	System.out.println(auxi.length);
-	float[] y = new float[auxi.length];
-	for (int i = 0; i < y.length; i++) {
+	System.out.println(length);
+	float[] y = new float[length];
+	for (int i = 0; i < length; i++) {
 	    y[i]= (float) auxi[i];
 	}
-	x= new float[auxi.length];
-	for (int i = 0; i < x.length; i++) {
-	    x[i]=i;
+	x= new float[length];
+	for (int i = 0; i < length; i++) {
+	    x[i]=(float) (i*(Stack4D5D.formatVTC.getTr()/1000.0));
 	}
 	//  float[] e = {.8f,.6f,.5f,.4f,.3f,.5f,.6f,.7f,.8f}; // error bars
 
 	ChartWindow.noGridLines = false; // draw grid lines
 	plot  = new Chart("Example Plot","X Axis","Y Axis",x,y);
-	plot.setLimits(0,200 , 0, 10000);
-	plot.setLineWidth(2);
+	plot.setLimits(0, auxi.length*Stack4D5D.formatVTC.getTr()/1000.0,Tools.getMinMax(auxi)[0] , Tools.getMinMax(auxi)[1]);
+	//plot.setLimits(0, length, 0, Tools.getMinMax(auxi)[1]);
+	plot.setLineWidth(1);
 	//  plot.addErrorBars(e);
 
 	// add a second curve

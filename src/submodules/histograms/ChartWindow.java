@@ -44,8 +44,8 @@ public class ChartWindow extends ImageWindow implements ActionListener, Clipboar
 	/** Connect points with solid lines. */
 	public static final int LINE = 2;
 
-	private static final int WIDTH = 450;
-	private static final int HEIGHT = 200;
+	private static final int WIDTH = 800;
+	private static final int HEIGHT = 300;
 	
 	private static final String MIN = "pp.min";
 	private static final String MAX = "pp.max";
