@@ -15,30 +15,48 @@ public class ChartWithSliders   {
 
     Chart   plot;
     public Chart getPlot() {
-        return plot;
+	return plot;
     }
 
     public void setPlot(Chart plot) {
-        this.plot = plot;
+	this.plot = plot;
     }
 
-    public void initialize(double[] auxi, int length) {
+    public void initialize(double[] real, double[] imaginaria) {
 
 	float[] x;
-	System.out.println(length);
-	float[] y = new float[length];
-	for (int i = 0; i < length; i++) {
-	    y[i]= (float) auxi[i];
+	float[] y;
+	x = new float[real.length];
+
+	if(imaginaria == null){
+	    y = new float[real.length];  
+	    for (int i = 0; i < real.length; i++) {
+		y[i]= (float) real[i];
+		x[i]=(float) (i*(Stack4D5D.formatVTC.getTr()/1000.0));
+	    }
+
+	}else{
+	    y = new float[imaginaria.length];
+	    for (int i = 0; i < imaginaria.length; i++) {
+		y[i]=(float) imaginaria[i];
+	    }
+	    for (int i = 0; i < real.length; i++) {
+		x[i]=(float) real[i];
+	    }
 	}
-	x= new float[length];
-	for (int i = 0; i < length; i++) {
-	    x[i]=(float) (i*(Stack4D5D.formatVTC.getTr()/1000.0));
-	}
+
+
+
+
 	//  float[] e = {.8f,.6f,.5f,.4f,.3f,.5f,.6f,.7f,.8f}; // error bars
 
 	ChartWindow.noGridLines = false; // draw grid lines
 	plot  = new Chart("Example Plot","X Axis","Y Axis",x,y);
-	plot.setLimits(0, auxi.length*Stack4D5D.formatVTC.getTr()/1000.0,Tools.getMinMax(auxi)[0] , Tools.getMinMax(auxi)[1]);
+	if(imaginaria == null){
+	    plot.setLimits(0, real.length*Stack4D5D.formatVTC.getTr()/1000.0,Tools.getMinMax(real)[0] , Tools.getMinMax(real)[1]);
+	}else{
+	    plot.setLimits(0, real.length*Stack4D5D.formatVTC.getTr()/1000.0,Tools.getMinMax(imaginaria)[0] , Tools.getMinMax(imaginaria)[1]);
+	}
 	//plot.setLimits(0, length, 0, Tools.getMinMax(auxi)[1]);
 	plot.setLineWidth(1);
 	//  plot.addErrorBars(e);
@@ -59,7 +77,7 @@ public class ChartWithSliders   {
 	plot.setColor(Color.blue);
 	plot.show();
     }
-    
+
     public void change(double[] auxi) {
 
 	float[] x;
@@ -74,18 +92,18 @@ public class ChartWithSliders   {
 	}
 	//  float[] e = {.8f,.6f,.5f,.4f,.3f,.5f,.6f,.7f,.8f}; // error bars
 
-	
+
 	//  plot.addErrorBars(e);
-Arrays.fill(x, 0);
-plot.initialize(x, y);
-plot.show2();
+	Arrays.fill(x, 0);
+	plot.initialize(x, y);
+	plot.show2();
 
 	// add a second curve
 	/*  float x2[] = {.4f,.5f,.6f,.7f,.8f};
         float y2[] = {4,3,3,4,5};
         plot.setColor(Color.red);
-       
-*/	
+
+	 */	
     }
 
 

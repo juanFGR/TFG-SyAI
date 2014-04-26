@@ -7,8 +7,8 @@
   <property name="dist"  location="dist" />
  
 	 <property name="pluginsDir"  location="$basedir/../../IJ/plugins/" />
- 
-  <property name="user.name" value="Patrick Pirrotte" />
+
+  <property name="user.name" value="Juan Gonzalez" />
 <target name="main" depends="compress" description="Main target">
 	<echo>
 		Building the .jar file.

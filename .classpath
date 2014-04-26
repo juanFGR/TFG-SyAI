@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
 	<classpathentry kind="src" path="src"/>
-	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/IJ"/>
 	<classpathentry kind="lib" path="dependency/jfreechart/jcommon-1.0.21.jar"/>
 	<classpathentry kind="lib" path="dependency/jfreechart/jfreechart-1.0.17.jar"/>
@@ -15,5 +14,6 @@
 	<classpathentry kind="lib" path="dependency/jfreechart/servlet.jar"/>
 	<classpathentry kind="lib" path="dependency/jfreechart/swtgraphics2d.jar"/>
 	<classpathentry kind="lib" path="dependency/ImageJ_3D_Viewer.jar"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

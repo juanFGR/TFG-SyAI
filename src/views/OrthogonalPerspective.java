@@ -22,6 +22,7 @@ import javax.swing.JSlider;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
+import core.inter.inter;
 import stacks.Stack4D5D;
 
 
@@ -29,7 +30,7 @@ public class OrthogonalPerspective extends JPanel implements ChangeListener, Mou
 
     private static final long serialVersionUID = 6042629063683509113L;
 
-    private ImagePlus ipxy, ipyz, ipxz = null; 
+    private ImagePlus ipxy, ipyz, ipxz; 
     private JSlider slicesSliderxy, slicesSlideryz, slicesSliderxz, slicesSlidertime = null;
 
     ImageProcessor xy, yz, xz ;
@@ -48,9 +49,9 @@ public class OrthogonalPerspective extends JPanel implements ChangeListener, Mou
 	ipxz = new ImagePlus("ehh",xz);
 
 
-	bxy = new ImagePlus("", xy);
-	bxz = new ImagePlus("", xz);
-	byz = new ImagePlus("", yz);
+	bxy = new ImagePlus(inter.texts.getString("window_xy"), xy);
+	bxz = new ImagePlus(inter.texts.getString("window_xz"), xz);
+	byz = new ImagePlus("YZ", yz);
 
 	updatexy(0,0);
 	updatexz(0,0);
@@ -70,22 +71,21 @@ public class OrthogonalPerspective extends JPanel implements ChangeListener, Mou
 	byz.getWindow().setLocation(bxy.getWidth()+35, 10);
 	bxz.getWindow().setLocation(10, bxy.getHeight()+65);
 	slicesSliderxy = new JSlider(JSlider.HORIZONTAL,0,Stack4D5D.getSlices(),0); 
-	slicesSliderxy.setName("XY");
+	slicesSliderxy.setName(inter.texts.getString("window_xy"));
 	slicesSliderxy.setBounds(154, 2, 252, 26);
 	slicesSliderxy.addChangeListener(this); 
 
 
-	slicesSlideryz = new JSlider(JSlider.HORIZONTAL,0,Stack4D5D.getWidth(),0); 
-	slicesSlideryz.setName("YZ");
-	slicesSlideryz.setBounds(154, 30, 252, 26);
-	slicesSlideryz.addChangeListener(this); 
-
-
 	slicesSliderxz = new JSlider(JSlider.HORIZONTAL,0,Stack4D5D.getHeight(),0); 
-	slicesSliderxz.setName("XZ");
+	slicesSliderxz.setName(inter.texts.getString("window_xz"));
 	slicesSliderxz.setBounds(154, 70, 252, 26);
 	slicesSliderxz.addChangeListener(this); 
-
+	
+	
+	slicesSlideryz = new JSlider(JSlider.HORIZONTAL,0,Stack4D5D.getWidth(),0); 
+	slicesSlideryz.setName(inter.texts.getString("window_yz"));
+	slicesSlideryz.setBounds(154, 30, 252, 26);
+	slicesSlideryz.addChangeListener(this); 
 
 	slicesSlidertime = new JSlider(JSlider.HORIZONTAL,0,Stack4D5D.getFrames(),0); 
 	slicesSlidertime.setName("TIME");
@@ -144,14 +144,13 @@ public class OrthogonalPerspective extends JPanel implements ChangeListener, Mou
 	    updatexz(slicesSliderxz.getValue(),slicesSlidertime.getValue());
 	    updateyz(slicesSlideryz.getValue(),slicesSlidertime.getValue());
 
-	}else if(name.equals("XY")){
+	}else if(name.equals(inter.texts.getString("window_xy"))){
 	    updatexy(slicesSliderxy.getValue(),slicesSlidertime.getValue());
 
-	}  else if (name.equals("XZ")){
+	}  else if (name.equals(inter.texts.getString("window_xz"))){
 	    updatexz(slicesSliderxz.getValue(),slicesSlidertime.getValue());
 
-	}
-	else if(name.equals("YZ")){
+	}  else if (name.equals(inter.texts.getString("window_yz"))){
 	    updateyz(slicesSlideryz.getValue(),slicesSlidertime.getValue());
 	}
     }

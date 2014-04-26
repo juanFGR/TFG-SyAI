@@ -12,8 +12,9 @@ public class Core {
 	public FormatVOI formatVOI;
 	ImportContentOfFiles import_vtc_Sequence;
 	byte[] fileContent;
-
+	
 	public void launch_Import_vtc_Sequence(){
+	 
 		import_vtc_Sequence = new ImportContentOfFiles();
 		import_vtc_Sequence.importSequence("vtc");
 		fileContent = Arrays.copyOf(import_vtc_Sequence.bFile, import_vtc_Sequence.bFile.length);
