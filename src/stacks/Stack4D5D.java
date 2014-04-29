@@ -5,8 +5,11 @@ import ij.ImagePlus;
 import ij.ImageStack;
 import ij.process.ImageProcessor;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Vector;
+
+import javax.vecmath.Point3d;
 
 import core.Core;
 
@@ -30,7 +33,7 @@ public class Stack4D5D {
     private static double factorScale;
     public static FormatVTC formatVTC;
     public static int TAM_RESIZE = 5;
-
+    public static ArrayList<Point3d> ListOfVoid =  new ArrayList<Point3d>();
 
     /**
      * Esta funcion saca del vector completo la imagen que nos interesa

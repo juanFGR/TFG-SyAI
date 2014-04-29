@@ -56,26 +56,27 @@ public class Menu extends JFrame  {
 	    public void actionPerformed(ActionEvent e) {
 
 		if (IJ.getImage().getRoi() != null){
-			
-		
-
-		
-		/*JFrame frame = new JFrame(); */
 		VOI_media a = new VOI_media();
 		a.initialize(IJ.getImage().getRoi());
-
-		/*frame.add(a); 
-		frame.setBounds(600, 0, 400, 200);
-
-
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); 
-		frame.setVisible(true); */
 		}
 
 	    }
 	});
 	Voi_MediaBtn.setBounds(10, 60, 111, 22);
 	getContentPane().add(Voi_MediaBtn);
+	
+	
+	
+	Button VoidBtn = new Button("Cargar Void");
+	VoidBtn.addActionListener(new ActionListener() {
+	    public void actionPerformed(ActionEvent e) {
+
+		core.launch_Import_Voids();
+
+	    }
+	});
+	VoidBtn.setBounds(10,85, 111, 22);
+	getContentPane().add(VoidBtn);
 
     }
 }

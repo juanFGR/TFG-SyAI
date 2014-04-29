@@ -16,6 +16,7 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
 import java.awt.geom.GeneralPath;
+import java.util.Arrays;
 
 import javax.swing.JPanel;
 import javax.swing.JSlider;
@@ -80,8 +81,8 @@ public class OrthogonalPerspective extends JPanel implements ChangeListener, Mou
 	slicesSliderxz.setName(inter.texts.getString("window_xz"));
 	slicesSliderxz.setBounds(154, 70, 252, 26);
 	slicesSliderxz.addChangeListener(this); 
-	
-	
+
+
 	slicesSlideryz = new JSlider(JSlider.HORIZONTAL,0,Stack4D5D.getWidth(),0); 
 	slicesSlideryz.setName(inter.texts.getString("window_yz"));
 	slicesSlideryz.setBounds(154, 30, 252, 26);
@@ -131,6 +132,7 @@ public class OrthogonalPerspective extends JPanel implements ChangeListener, Mou
 	GeneralPath path = new GeneralPath();
 	Point p = new Point(slicesSlideryz.getValue() , slicesSliderxz.getValue() );
 	drawXYCross(bxy, p, path);
+	drawPoints(bxy, path);
 	GeneralPath path2 = new GeneralPath();
 	drawXZCross(bxz, p, path2);
 	GeneralPath path3 = new GeneralPath();
@@ -189,7 +191,18 @@ public class OrthogonalPerspective extends JPanel implements ChangeListener, Mou
 	bxz.repaintWindow();		
     }
 
+    void drawPoints(ImagePlus bxy2, GeneralPath path2) {
+	int one = 1;
+	int two = 2;
 
+	for(int h=0; h<Stack4D5D.ListOfVoid.size(); h++) {		
+	    path2.moveTo(Math.abs(Stack4D5D.ListOfVoid.get(h).x*Stack4D5D.TAM_RESIZE),Math.abs(Stack4D5D.ListOfVoid.get(h).y*Stack4D5D.TAM_RESIZE));
+	    path2.lineTo(Math.abs(Stack4D5D.ListOfVoid.get(h).x*Stack4D5D.TAM_RESIZE),Math.abs(Stack4D5D.ListOfVoid.get(h).y*Stack4D5D.TAM_RESIZE));
+
+	}
+
+
+    }
 
 
     //Views 

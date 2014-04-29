@@ -29,10 +29,10 @@ public class ChartWithSliders   {
 	x = new float[real.length];
 
 	if(imaginaria == null){
-	    y = new float[real.length];  
-	    for (int i = 0; i < real.length; i++) {
+	    y = new float[real.length/2];  
+	    for (int i = 0; i < real.length/2; i++) {
 		y[i]= (float) real[i];
-		x[i]=(float) (i*(Stack4D5D.formatVTC.getTr()/1000.0));
+		x[i]=(float) (i*(1.0/(Stack4D5D.formatVTC.getTr()/1000.0))/real.length);
 	    }
 
 	}else{
@@ -51,11 +51,11 @@ public class ChartWithSliders   {
 	//  float[] e = {.8f,.6f,.5f,.4f,.3f,.5f,.6f,.7f,.8f}; // error bars
 
 	ChartWindow.noGridLines = false; // draw grid lines
-	plot  = new Chart("Example Plot","X Axis","Y Axis",x,y);
+	plot  = new Chart("Example Plot","Time","Intensity",x,y);
 	if(imaginaria == null){
-	    plot.setLimits(0, real.length*Stack4D5D.formatVTC.getTr()/1000.0,Tools.getMinMax(real)[0] , Tools.getMinMax(real)[1]);
+	    plot.setLimits(0, Tools.getMinMax(x)[1],Tools.getMinMax(real)[0] , Tools.getMinMax(real)[1]);
 	}else{
-	    plot.setLimits(0, real.length*Stack4D5D.formatVTC.getTr()/1000.0,Tools.getMinMax(imaginaria)[0] , Tools.getMinMax(imaginaria)[1]);
+	    plot.setLimits(0, real.length,Tools.getMinMax(imaginaria)[0] , Tools.getMinMax(imaginaria)[1]);
 	}
 	//plot.setLimits(0, length, 0, Tools.getMinMax(auxi)[1]);
 	plot.setLineWidth(1);

@@ -8,61 +8,62 @@ import java.io.FileInputStream;
 
 public class ImportContentOfFiles {
 
-	public byte[] bFile;
+    public byte[] bFile;
 
-	public void importSequence(String type) {
-		OpenDialog od = new OpenDialog("Open Image Sequence...");
-		String directory = od.getDirectory();
-		String name = od.getFileName();
-		if (name==null)
-			return;
-		String[] list = (new File(directory)).list();
-		if (list==null)
-			return;
-		String title = directory;
-		if (title.endsWith(File.separator))
-			title = title.substring(0, title.length()-1);
-		int index = title.lastIndexOf(File.separatorChar);
-		if (index!=-1) title = title.substring(index + 1);
-		if (title.endsWith(":"))
-			title = title.substring(0, title.length()-1);
+    public void importSequence(String type) {
+	OpenDialog od = new OpenDialog("Open Image Sequence...");
+	String directory = od.getDirectory();
+	String name = od.getFileName();
+	if (name==null)
+	    return;
+	String[] list = (new File(directory)).list();
+	if (list==null)
+	    return;
+	String title = directory;
+	if (title.endsWith(File.separator))
+	    title = title.substring(0, title.length()-1);
+	int index = title.lastIndexOf(File.separatorChar);
+	if (index!=-1) title = title.substring(index + 1);
+	if (title.endsWith(":"))
+	    title = title.substring(0, title.length()-1);
 
-		IJ.register(ImportContentOfFiles.class);
+	IJ.register(ImportContentOfFiles.class);
 
-		String candidato="";
-		for (int i = 0; i < list.length; i++) {
-			if(list[i].substring(list[i].length()-5).contains("."+type)){
-				IJ.log(directory+list[i]);
-				candidato=list[i];
-			}
-		}
-		IJ.log(directory+candidato);
-		String path = directory+candidato;
+	String candidato="";
+	int i =0;
+	boolean flag = false;
+	do{
+	    if(list[i].substring(list[i].length()-5).contains("."+type)){
+	    IJ.log(directory+list[i]);
+	    candidato=list[i];flag=true;
+	   
+	    }
+	    i++;
+	}while(!flag);
 
-		FileInputStream fileInputStream=null;
+	IJ.log(directory+candidato);
+	String path = directory+candidato;
 
-		File file = new File(path);
+	FileInputStream fileInputStream=null;
 
-		bFile = new byte[(int) file.length()];
+	File file = new File(path);
 
-		try {
-			//convert file into array of bytes
-			fileInputStream = new FileInputStream(file);
-			fileInputStream.read(bFile);
-			fileInputStream.close();
-			/*Stack4D5D stack4d5d = new Stack4D5D(bFile, "vtc");
-			ImageProcessor a ;
-			a = new ByteProcessor(stack4d5d.formatVTC.getDimX(), stack4d5d.formatVTC.getDimY());
-			ImagePlus t = new ImagePlus("", a);*/
-		
-		//	t.show();
-		}catch(Exception e){
-			e.printStackTrace();
-		}
+	bFile = new byte[(int) file.length()];
 
-	
+	try {
+	    //convert file into array of bytes
+	    fileInputStream = new FileInputStream(file);
+	    fileInputStream.read(bFile);
+	    fileInputStream.close();
 
+	    //	t.show();
+	}catch(Exception e){
+	    e.printStackTrace();
 	}
-	
+
+
+
+    }
+
 
 }

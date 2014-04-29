@@ -10,20 +10,24 @@ import submodules.files.ImportContentOfFiles;
 public class Core {
 	public FormatVTC formatVTC;
 	public FormatVOI formatVOI;
-	ImportContentOfFiles import_vtc_Sequence;
+	ImportContentOfFiles importFile;
 	byte[] fileContent;
 	
 	public void launch_Import_vtc_Sequence(){
 	 
-		import_vtc_Sequence = new ImportContentOfFiles();
-		import_vtc_Sequence.importSequence("vtc");
-		fileContent = Arrays.copyOf(import_vtc_Sequence.bFile, import_vtc_Sequence.bFile.length);
+	    importFile = new ImportContentOfFiles();
+	    importFile.importSequence("vtc");
+		fileContent = Arrays.copyOf(importFile.bFile, importFile.bFile.length);
 		formatVTC = new FormatVTC(fileContent);
-	/*	import_vtc_Sequence.importSequence("voi");
-		fileContent = Arrays.copyOf(import_vtc_Sequence.bFile, import_vtc_Sequence.bFile.length);
-		formatVOI= new FormatVOI(fileContent); */
+		
 		 Stack4D5D.Initialize(formatVTC, "vtc");
 	}
 
+	public void launch_Import_Voids(){
+	    importFile = new ImportContentOfFiles();
+	    importFile.importSequence("voi");
+		fileContent = Arrays.copyOf(importFile.bFile, importFile.bFile.length);
+		formatVOI= new FormatVOI(fileContent); 
+	}
 
 }

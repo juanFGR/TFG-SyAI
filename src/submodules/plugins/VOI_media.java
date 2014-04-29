@@ -31,7 +31,7 @@ public class VOI_media  {
     public int nextPotencia2(int n) 
     { 
 	int nPotencia=0,val =0;
-	while(val<n){
+	while(val<=n){
 	    val =  (int) Math.pow(2, nPotencia);
 	    nPotencia++;
 	}
@@ -104,20 +104,28 @@ public class VOI_media  {
 	double[] real =  new double[nextPotencia2(buffer.length)];
 	Arrays.fill(imaginaria, 0);
 	Arrays.fill(real, 0);
+	
+	double _fillFFTwiththisvalue = 0;
 	for (int i = 0; i < buffer.length; i++) {
 	    real[i] = buffer[i];
+	    _fillFFTwiththisvalue +=buffer[i];
+	}
+	
+	_fillFFTwiththisvalue = (double)(_fillFFTwiththisvalue/(double)buffer.length);
+	for (int i = buffer.length-1; i < real.length; i++) {
+	    real[i] = _fillFFTwiththisvalue;
 	}
 	transform.fft(real, imaginaria);
 
 
 	ChartWithSliders oopi = new ChartWithSliders();
 
-	/*for (int i = 0; i < real.length; i++) {
-	    double modulo = Math.sqrt(Math.pow(real[i],2)+Math.pow(imaginaria[i],2));
-	    real[i] = modulo*(Math.cos(real[i]));
-	    imaginaria[i] = modulo*(Math.sin(real[i]));
-	}*/
-	oopi.initialize(real,imaginaria);
+	for (int i = 0; i < real.length; i++) {
+	    double modulo = Math.sqrt(real[i]*real[i]+imaginaria[i]*imaginaria[i]);
+	    real[i] = 10*Math.log10(modulo+1);//*(Math.cos(real[i]));
+	    //imaginaria[i] = modulo*(Math.sin(real[i]));
+	}
+	oopi.initialize(real,null);
 
     }
 
