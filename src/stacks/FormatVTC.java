@@ -62,9 +62,14 @@ public class FormatVTC {
 	    setNumberOfProtocol(wrapped.getShort());	
 	    pos0 =wrapped.position();
 	    pos1 =wrapped.position();
-	    while(wrapped.get() != 00){
+	    byte aux = wrapped.get();
+	    
+	    while(aux != 0){
+		System.out.print(aux);
+		aux = wrapped.get();
 		pos1++;	
 	    }
+	    
 	    wrapped.position(pos1++);
 	    setCurrentProtocol(wrapped.getShort());
 	    setDataTypeValues(wrapped.getShort());
@@ -100,7 +105,7 @@ public class FormatVTC {
 	    int z  =20;
 
 
-	 /*   int j =0;
+	    /*   int j =0;
 	    float[]imagesf = new float[dimX*dimY]; 
 	    for (int y = 0; y < dimY; y++) {
 		for (int x = 0; x < dimX; x++) {
@@ -116,7 +121,7 @@ public class FormatVTC {
 	    q.updateImage();
 	    q.updateAndDraw();
 	    q.show();
-*/
+	     */
 	    wrapped.clear(); //clear buffer
 	    System.out.println("--->>>"+images.length);
 	}catch(Exception e){
