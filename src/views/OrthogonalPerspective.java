@@ -2,6 +2,7 @@ package views;
 
 import ij.IJ;
 import ij.ImagePlus;
+import ij.gui.GenericDialog;
 import ij.gui.ImageCanvas;
 import ij.gui.ImageWindow;
 import ij.process.FloatProcessor;
@@ -16,15 +17,15 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
 import java.awt.geom.GeneralPath;
-import java.util.Arrays;
 
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JSlider;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
-import core.inter.inter;
 import stacks.Stack4D5D;
+import core.inter.inter;
 
 
 public class OrthogonalPerspective extends JPanel implements ChangeListener, MouseListener, MouseMotionListener {
@@ -39,8 +40,14 @@ public class OrthogonalPerspective extends JPanel implements ChangeListener, Mou
     String typeView = null;
     ImageCanvas canvas;
 
+    
+  
+    
+    
     public OrthogonalPerspective() {
-
+	     GenericDialog gd = new GenericDialog("...");
+	  gd.addSlider("Fraction to Fade In", 0.0, 100.0, 50.0);
+	       gd.showDialog();
 	xy = new FloatProcessor(Stack4D5D.getWidth(), Stack4D5D.getHeight(), Stack4D5D.getImgVectorxy(1,0));
 	yz = new FloatProcessor(Stack4D5D.getWidth(), Stack4D5D.getHeight(), Stack4D5D.getImgVectoryz(1,0));
 	xz = new FloatProcessor(Stack4D5D.getWidth(), Stack4D5D.getSlices(), Stack4D5D.getImgVectorxz(1,0));
@@ -96,7 +103,7 @@ public class OrthogonalPerspective extends JPanel implements ChangeListener, Mou
 
 	setLayout(null);
 
-	add(new Label("Plano XY"));
+	
 	add(slicesSliderxy); 
 	add(new Label("Plano YZ"));
 	add(slicesSlideryz); 
@@ -104,6 +111,7 @@ public class OrthogonalPerspective extends JPanel implements ChangeListener, Mou
 	add(slicesSliderxz); 
 	add(new Label("Tiempo"));
 	add(slicesSlidertime); 
+	add(new JLabel("tesffffft"));
 	validate();
 	repaint();
 	// Create a universe and show it
@@ -196,8 +204,8 @@ public class OrthogonalPerspective extends JPanel implements ChangeListener, Mou
 	int two = 2;
 
 	for(int h=0; h<Stack4D5D.ListOfVoid.size(); h++) {		
-	    path2.moveTo(Math.abs(Stack4D5D.ListOfVoid.get(h).x*Stack4D5D.TAM_RESIZE),Math.abs(Stack4D5D.ListOfVoid.get(h).y*Stack4D5D.TAM_RESIZE));
-	    path2.lineTo(Math.abs(Stack4D5D.ListOfVoid.get(h).x*Stack4D5D.TAM_RESIZE),Math.abs(Stack4D5D.ListOfVoid.get(h).y*Stack4D5D.TAM_RESIZE));
+	    path2.moveTo(Math.abs(Stack4D5D.ListOfVoid.get(h).x*Stack4D5D.TAM_RESIZE)/3,Math.abs(Stack4D5D.ListOfVoid.get(h).y*Stack4D5D.TAM_RESIZE)/3);
+	    path2.lineTo(Math.abs(Stack4D5D.ListOfVoid.get(h).x*Stack4D5D.TAM_RESIZE)/3,Math.abs(Stack4D5D.ListOfVoid.get(h).y*Stack4D5D.TAM_RESIZE)/3);
 
 	}
 

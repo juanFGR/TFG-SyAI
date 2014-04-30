@@ -77,7 +77,7 @@ public class FormatVOI {
     private double[] PointOfVoxes(String string) {
 	String [] tempVal = string.split(" ");
 	if(tempVal.length ==3){
-	    double [] values = new double[]{Double.parseDouble(tempVal[0]),Double.parseDouble(tempVal[1]),Double.parseDouble(tempVal[2])};
+	    double [] values = new double[]{Double.parseDouble(tempVal[0])-Stack4D5D.formatVTC.getxStart(),Double.parseDouble(tempVal[1])-Stack4D5D.formatVTC.getyStart(),Double.parseDouble(tempVal[2])-Stack4D5D.formatVTC.getzStart()};
 	    return values;
 	}
 

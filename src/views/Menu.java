@@ -78,5 +78,16 @@ public class Menu extends JFrame  {
 	VoidBtn.setBounds(10,85, 111, 22);
 	getContentPane().add(VoidBtn);
 
+	
+	Button VmrBtn = new Button("Cargar Vmr");
+	VmrBtn.addActionListener(new ActionListener() {
+	    public void actionPerformed(ActionEvent e) {
+
+		core.launch_Import_Vmr();
+
+	    }
+	});
+	VmrBtn.setBounds(10,100, 111, 22);
+	getContentPane().add(VmrBtn);
     }
 }

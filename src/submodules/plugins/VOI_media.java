@@ -9,7 +9,8 @@ import java.util.Arrays;
 
 import core.inter.inter;
 import stacks.Stack4D5D;
-import submodules.histograms.ChartWithSliders;
+import submodules.histograms.ChartForFFT;
+import submodules.histograms.ChartForMedia;
 
 public class VOI_media  {
 
@@ -23,7 +24,7 @@ public class VOI_media  {
     double[] media;
     ImagePlus a;
     HistogramWindow hist;
-    ChartWithSliders oop;
+    ChartForMedia oop;
     double[] buffer;
 
 
@@ -92,9 +93,9 @@ public class VOI_media  {
 
 
 
-	oop = new ChartWithSliders();
+	oop = new ChartForMedia();
 
-	oop.initialize(buffer,null);
+	oop.initialize(buffer,1);
 
 
 
@@ -118,14 +119,14 @@ public class VOI_media  {
 	transform.fft(real, imaginaria);
 
 
-	ChartWithSliders oopi = new ChartWithSliders();
+	ChartForFFT oopi = new ChartForFFT();
 
 	for (int i = 0; i < real.length; i++) {
 	    double modulo = Math.sqrt(real[i]*real[i]+imaginaria[i]*imaginaria[i]);
 	    real[i] = 10*Math.log10(modulo+1);//*(Math.cos(real[i]));
 	    //imaginaria[i] = modulo*(Math.sin(real[i]));
 	}
-	oopi.initialize(real,null);
+	oopi.initialize(real,((1.0/(Stack4D5D.formatVTC.getTr()/1000.0))/real.length));
 
     }
 
