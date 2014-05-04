@@ -104,24 +104,6 @@ public class FormatVTC {
 	    int t=5;
 	    int z  =20;
 
-
-	    /*   int j =0;
-	    float[]imagesf = new float[dimX*dimY]; 
-	    for (int y = 0; y < dimY; y++) {
-		for (int x = 0; x < dimX; x++) {
-
-		    imagesf[j] =   images[(z*dimY*dimX*numbeOfVolumes)+(y*numbeOfVolumes*dimX) +(numbeOfVolumes*x)+t];
-		    j++;
-		}
-	    }
-
-	    ImageProcessor u = new FloatProcessor( dimX,dimY, imagesf);
-
-	    ImagePlus q = new ImagePlus("", u);
-	    q.updateImage();
-	    q.updateAndDraw();
-	    q.show();
-	     */
 	    wrapped.clear(); //clear buffer
 	    System.out.println("--->>>"+images.length);
 	}catch(Exception e){

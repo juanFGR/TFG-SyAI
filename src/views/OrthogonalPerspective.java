@@ -1,5 +1,6 @@
 package views;
 
+import filters.FIR_filters;
 import ij.IJ;
 import ij.ImagePlus;
 import ij.gui.GenericDialog;
@@ -40,14 +41,14 @@ public class OrthogonalPerspective extends JPanel implements ChangeListener, Mou
     String typeView = null;
     ImageCanvas canvas;
 
-    
-  
-    
-    
+
+
+
+
     public OrthogonalPerspective() {
-	     GenericDialog gd = new GenericDialog("...");
+	/*GenericDialog gd = new GenericDialog("...");
 	  gd.addSlider("Fraction to Fade In", 0.0, 100.0, 50.0);
-	       gd.showDialog();
+	  gd.showDialog();*/
 	xy = new FloatProcessor(Stack4D5D.getWidth(), Stack4D5D.getHeight(), Stack4D5D.getImgVectorxy(1,0));
 	yz = new FloatProcessor(Stack4D5D.getWidth(), Stack4D5D.getHeight(), Stack4D5D.getImgVectoryz(1,0));
 	xz = new FloatProcessor(Stack4D5D.getWidth(), Stack4D5D.getSlices(), Stack4D5D.getImgVectorxz(1,0));
@@ -103,7 +104,7 @@ public class OrthogonalPerspective extends JPanel implements ChangeListener, Mou
 
 	setLayout(null);
 
-	
+
 	add(slicesSliderxy); 
 	add(new Label("Plano YZ"));
 	add(slicesSlideryz); 

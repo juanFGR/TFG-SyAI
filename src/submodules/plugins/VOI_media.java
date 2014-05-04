@@ -1,5 +1,6 @@
 package submodules.plugins;
 
+import filters.FIR_filters;
 import ij.IJ;
 import ij.ImagePlus;
 import ij.gui.HistogramWindow;
@@ -103,6 +104,13 @@ public class VOI_media  {
 	FFT transform = new FFT(nextPotencia2(buffer.length));
 	double[] imaginaria = new double[nextPotencia2(buffer.length)];
 	double[] real =  new double[nextPotencia2(buffer.length)];
+	
+	
+	FIR_filters filters = new FIR_filters();
+	filters.mostrar();
+	
+	
+	
 	Arrays.fill(imaginaria, 0);
 	Arrays.fill(real, 0);
 	

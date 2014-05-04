@@ -139,8 +139,8 @@ public class Stack4D5D {
     }
 
     /**
-     * Obtiene la posicion del pixel de la imagen dentro del vector 
-     * unidimensional en el cual se almacenan las imagenes
+     * Obtiene la posición del pixel de la imagen dentro del vector 
+     * unidimensional en el cual se almacenan las imágenes
      * 
      * @param ancho {@link Integer} contine el ancho de la imagen
      * @param alto {@link Integer} contiene el alto de la imagen
