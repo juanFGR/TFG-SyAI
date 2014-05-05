@@ -1,54 +1,98 @@
 package views;
 
-import filters.FIR_filters;
 import ij.IJ;
 import ij.ImagePlus;
+import ij.gui.DialogListener;
 import ij.gui.GenericDialog;
 import ij.gui.ImageCanvas;
-import ij.gui.ImageWindow;
+import ij.gui.NonBlockingGenericDialog;
 import ij.process.FloatProcessor;
 import ij.process.ImageProcessor;
 
+import java.awt.AWTEvent;
 import java.awt.BasicStroke;
 import java.awt.Color;
-import java.awt.Event;
-import java.awt.Label;
 import java.awt.Point;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
-import java.awt.event.MouseMotionListener;
 import java.awt.geom.GeneralPath;
-
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.JSlider;
-import javax.swing.event.ChangeEvent;
-import javax.swing.event.ChangeListener;
 
 import stacks.Stack4D5D;
 import core.inter.inter;
 
 
-public class OrthogonalPerspective extends JPanel implements ChangeListener, MouseListener, MouseMotionListener {
+public class OrthogonalPerspective implements DialogListener  {
 
-    private static final long serialVersionUID = 6042629063683509113L;
 
     private ImagePlus ipxy, ipyz, ipxz; 
-    private JSlider slicesSliderxy, slicesSlideryz, slicesSliderxz, slicesSlidertime = null;
-
     ImageProcessor xy, yz, xz ;
     ImagePlus bxy , byz, bxz ;
     String typeView = null;
     ImageCanvas canvas;
 
+    
+    
+    public void initialize () {
+	  
+	GenericDialog  gd = new GenericDialog("Controles");
+	      
+	       gd.addSlider("XY", 0.0, Stack4D5D.getSlices(), 0.0);
+	       gd.addSlider("XZ", 0.0, Stack4D5D.getHeight(), 0.0);
+	       gd.addSlider("YZ", 0.0, Stack4D5D.getWidth(), 0.0);
+	       gd.addSlider("Time", 0.0, Stack4D5D.getFrames(), 0.0);
+	       gd.setModal(false);
+	       gd.hideCancelButton();
+	       gd.setOKLabel("Cerrar");
+	       gd.addDialogListener(this);
+	       gd.showDialog();           // user input (or reading from macro) happens here       
+    }
+    
+     double []previusStates={0.0,0.0,0.0,0.0};
+   
+     
+    @Override
+    public boolean dialogItemChanged(GenericDialog gd, AWTEvent e) {
+	double []newStates={0.0,0.0,0.0,0.0};
+	for (int i = 0; i < newStates.length; i++) {
+	    newStates[i]= gd.getNextNumber();
+	}
+	
+	
+	GeneralPath path = new GeneralPath();
+	Point p = new Point((int)newStates[2] ,(int) newStates[1] );
+	drawXYCross(bxy, p, path);
+	drawPoints(bxy, path);
+	GeneralPath path2 = new GeneralPath();
+	drawXZCross(bxz, p, path2);
+	GeneralPath path3 = new GeneralPath();
+	drawYZCross(byz, p, path3);
 
+	bxy.setOverlay(path, Color.BLUE, new BasicStroke(1));
+	byz.setOverlay(path2, Color.BLUE, new BasicStroke(1));
+	bxz.setOverlay(path3, Color.BLUE, new BasicStroke(1));
+	
+	
+	if(previusStates[0]!=newStates[0]){
+	    previusStates[0]=newStates[0];
+	    updatexy((int)previusStates[0],(int)previusStates[3]);
+	}else if(previusStates[1]!=newStates[1]){
+	    previusStates[1]=newStates[1];
+	    updatexz((int)previusStates[1],(int)previusStates[3]);
+	}else if(previusStates[2]!=newStates[2]){
+	    previusStates[2]=newStates[2];
+	    updateyz((int)previusStates[2],(int)previusStates[3]);
+	}else if(previusStates[3]!=newStates[3]){
+	    previusStates[3]=newStates[3];
+	    updatexy((int)previusStates[0],(int)previusStates[3]);
+	    updatexz((int)previusStates[1],(int)previusStates[3]);
+	    updateyz((int)previusStates[2],(int)previusStates[3]);
+	}
 
-
+	return false;
+    }
+    
+   
 
     public OrthogonalPerspective() {
-	/*GenericDialog gd = new GenericDialog("...");
-	  gd.addSlider("Fraction to Fade In", 0.0, 100.0, 50.0);
-	  gd.showDialog();*/
+
 	xy = new FloatProcessor(Stack4D5D.getWidth(), Stack4D5D.getHeight(), Stack4D5D.getImgVectorxy(1,0));
 	yz = new FloatProcessor(Stack4D5D.getWidth(), Stack4D5D.getHeight(), Stack4D5D.getImgVectoryz(1,0));
 	xz = new FloatProcessor(Stack4D5D.getWidth(), Stack4D5D.getSlices(), Stack4D5D.getImgVectorxz(1,0));
@@ -71,102 +115,26 @@ public class OrthogonalPerspective extends JPanel implements ChangeListener, Mou
 	bxy.show();
 	bxz.show();
 	byz.show();
-	ImageWindow win = bxy.getWindow();
-	canvas = win.getCanvas();
-	canvas.addMouseListener(this);
-	canvas.addMouseMotionListener(this);
+	//ImageWindow win = bxy.getWindow();
+	//canvas = win.getCanvas();
+	//canvas.addMouseListener(this);
+	//canvas.addMouseMotionListener(this);
 
 	bxy.getWindow().setLocation(10, 10);
 	byz.getWindow().setLocation(bxy.getWidth()+35, 10);
 	bxz.getWindow().setLocation(10, bxy.getHeight()+65);
-	slicesSliderxy = new JSlider(JSlider.HORIZONTAL,0,Stack4D5D.getSlices(),0); 
-	slicesSliderxy.setName(inter.texts.getString("window_xy"));
-	slicesSliderxy.setBounds(154, 2, 252, 26);
-	slicesSliderxy.addChangeListener(this); 
 
-
-	slicesSliderxz = new JSlider(JSlider.HORIZONTAL,0,Stack4D5D.getHeight(),0); 
-	slicesSliderxz.setName(inter.texts.getString("window_xz"));
-	slicesSliderxz.setBounds(154, 70, 252, 26);
-	slicesSliderxz.addChangeListener(this); 
-
-
-	slicesSlideryz = new JSlider(JSlider.HORIZONTAL,0,Stack4D5D.getWidth(),0); 
-	slicesSlideryz.setName(inter.texts.getString("window_yz"));
-	slicesSlideryz.setBounds(154, 30, 252, 26);
-	slicesSlideryz.addChangeListener(this); 
-
-	slicesSlidertime = new JSlider(JSlider.HORIZONTAL,0,Stack4D5D.getFrames(),0); 
-	slicesSlidertime.setName("TIME");
-	slicesSlidertime.setBounds(154, 100, 252, 26);
-	slicesSlidertime.addChangeListener(this); 
-
-
-	setLayout(null);
-
-
-	add(slicesSliderxy); 
-	add(new Label("Plano YZ"));
-	add(slicesSlideryz); 
-	add(new Label("Plano XZ"));
-	add(slicesSliderxz); 
-	add(new Label("Tiempo"));
-	add(slicesSlidertime); 
-	add(new JLabel("tesffffft"));
-	validate();
-	repaint();
 	// Create a universe and show it
 
 	/*	Image3DUniverse univ = new Image3DUniverse();
-
 		univ.show();
-
-
 		// Add the image as an isosurface
-
 		Content c = univ.addVoltex(bxy);*/
 
 
     }
-
-
-    @Override
-    public void stateChanged(ChangeEvent e) {
-	// Someone has dragged the image slice slider.  We need 
-	// to update the frame being shown 
-
-	//	int frame = ((JSlider)e.getSource()).getValue(); 
-	String name = ((JSlider)e.getSource()).getName(); 
-
-	GeneralPath path = new GeneralPath();
-	Point p = new Point(slicesSlideryz.getValue() , slicesSliderxz.getValue() );
-	drawXYCross(bxy, p, path);
-	drawPoints(bxy, path);
-	GeneralPath path2 = new GeneralPath();
-	drawXZCross(bxz, p, path2);
-	GeneralPath path3 = new GeneralPath();
-	drawYZCross(byz, p, path3);
-
-	bxy.setOverlay(path, Color.BLUE, new BasicStroke(1));
-	byz.setOverlay(path2, Color.BLUE, new BasicStroke(1));
-	bxz.setOverlay(path3, Color.BLUE, new BasicStroke(1));
-	if (name.equals("TIME")){
-	    updatexy(slicesSliderxy.getValue(),slicesSlidertime.getValue());
-	    updatexz(slicesSliderxz.getValue(),slicesSlidertime.getValue());
-	    updateyz(slicesSlideryz.getValue(),slicesSlidertime.getValue());
-
-	}else if(name.equals(inter.texts.getString("window_xy"))){
-	    updatexy(slicesSliderxy.getValue(),slicesSlidertime.getValue());
-
-	}  else if (name.equals(inter.texts.getString("window_xz"))){
-	    updatexz(slicesSliderxz.getValue(),slicesSlidertime.getValue());
-
-	}  else if (name.equals(inter.texts.getString("window_yz"))){
-	    updateyz(slicesSlideryz.getValue(),slicesSlidertime.getValue());
-	}
-    }
-
-
+   
+    
     private void updatexy(int frame,int time) {
 	xy = new FloatProcessor(Stack4D5D.getWidth(), Stack4D5D.getHeight(), Stack4D5D.getImgVectorxy(frame+1,time));
 	ImagePlus txy = new ImagePlus("", xy);
@@ -242,7 +210,7 @@ public class OrthogonalPerspective extends JPanel implements ChangeListener, Mou
 	path.lineTo(x, height);	
     }
 
-
+/*
     public void mousePressed(MouseEvent e) {
 	int x = e.getX();
 	int y = e.getY();
@@ -280,5 +248,5 @@ public class OrthogonalPerspective extends JPanel implements ChangeListener, Mou
     public void mouseExited(MouseEvent e) {}
     public void mouseClicked(MouseEvent e) {}	
     public void mouseEntered(MouseEvent e) {}
-    public void mouseMoved(MouseEvent e) {}
+    public void mouseMoved(MouseEvent e) {}*/
 } 

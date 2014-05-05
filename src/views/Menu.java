@@ -37,13 +37,13 @@ public class Menu extends JFrame  {
 		JFrame frame = new JFrame(); 
 		OrthogonalPerspective a = new OrthogonalPerspective();
 
-
-		frame.add(a); 
+a.initialize();
+		/*frame.add(a); 
 		frame.setBounds(600, 0, 400, 200);
 
 
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); 
-		frame.setVisible(true); 
+		frame.setVisible(true); */
 
 	    }
 	});
