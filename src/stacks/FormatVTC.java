@@ -55,22 +55,20 @@ public class FormatVTC {
 	    wrapped.get(dst,0,dst.length);
 
 	    String file_string = new String(dst);
-	    setNameFile(file_string);
+	    setNameFile(file_string+"|");
 	    pos1++;
 	    wrapped.position(pos1);
 
 	    setNumberOfProtocol(wrapped.getShort());	
 	    pos0 =wrapped.position();
-	    pos1 =wrapped.position();
-	    byte aux = wrapped.get();
+	    pos1 =pos0;
 	    
-	    while(aux != 0){
-		System.out.print(aux);
-		aux = wrapped.get();
+	 
+	    while(wrapped.get() != 00){
 		pos1++;	
 	    }
-	    
-	    wrapped.position(pos1++);
+	    pos1++;
+	    wrapped.position(pos1);
 	    setCurrentProtocol(wrapped.getShort());
 	    setDataTypeValues(wrapped.getShort());
 	    setNumbeOfVolumes(wrapped.getShort());

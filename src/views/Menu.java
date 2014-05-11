@@ -16,14 +16,16 @@ public class Menu extends JFrame  {
 
     private static final long serialVersionUID = 173125243611514317L;
     Core core = new Core();
-
+    Filters menuFilters = new Filters();
     public Menu() {
 	getContentPane().setLayout(null);
 
 	Button importSequenceBtn = new Button(inter.texts.getString("Import_Sequence"));
 	importSequenceBtn.addActionListener(new ActionListener() {
 	    public void actionPerformed(ActionEvent e) {
+		
 		core.launch_Import_vtc_Sequence();
+		menuFilters.initialize();
 	    }
 	});
 	importSequenceBtn.setBounds(0, 0, 120, 25);
