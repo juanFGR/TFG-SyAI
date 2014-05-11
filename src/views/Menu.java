@@ -6,6 +6,7 @@ import javax.swing.JFrame;
 
 import submodules.plugins.VOI_media;
 import core.Core;
+import core.inter.inter;
 
 import java.awt.Button;
 import java.awt.event.ActionListener;
@@ -19,35 +20,26 @@ public class Menu extends JFrame  {
     public Menu() {
 	getContentPane().setLayout(null);
 
-	Button importSequenceBtn = new Button("Import Sequence");
+	Button importSequenceBtn = new Button(inter.texts.getString("Import_Sequence"));
 	importSequenceBtn.addActionListener(new ActionListener() {
 	    public void actionPerformed(ActionEvent e) {
 		core.launch_Import_vtc_Sequence();
 	    }
 	});
-	importSequenceBtn.setBounds(10, 10, 111, 22);
+	importSequenceBtn.setBounds(0, 0, 120, 25);
 	getContentPane().add(importSequenceBtn);
 
 
-	Button openPerspectiveBtn = new Button("Open Perspective");
+	Button openPerspectiveBtn = new Button(inter.texts.getString("Open_Perspective"));
 	openPerspectiveBtn.addActionListener(new ActionListener() {
 	    public void actionPerformed(ActionEvent e) {
 
-
-		JFrame frame = new JFrame(); 
 		OrthogonalPerspective a = new OrthogonalPerspective();
-
-a.initialize();
-		/*frame.add(a); 
-		frame.setBounds(600, 0, 400, 200);
-
-
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); 
-		frame.setVisible(true); */
+		a.initialize();
 
 	    }
 	});
-	openPerspectiveBtn.setBounds(10, 39, 111, 22);
+	openPerspectiveBtn.setBounds(0, 25, 120, 25);
 	getContentPane().add(openPerspectiveBtn);
 
 
@@ -56,18 +48,18 @@ a.initialize();
 	    public void actionPerformed(ActionEvent e) {
 
 		if (IJ.getImage().getRoi() != null){
-		VOI_media a = new VOI_media();
-		a.initialize(IJ.getImage().getRoi());
+		    VOI_media a = new VOI_media();
+		    a.initialize(IJ.getImage().getRoi());
 		}
 
 	    }
 	});
-	Voi_MediaBtn.setBounds(10, 60, 111, 22);
+	Voi_MediaBtn.setBounds(0, 50, 120, 25);
 	getContentPane().add(Voi_MediaBtn);
-	
-	
-	
-	Button VoidBtn = new Button("Cargar Void");
+
+
+
+	Button VoidBtn = new Button(inter.texts.getString("Load_VOI"));
 	VoidBtn.addActionListener(new ActionListener() {
 	    public void actionPerformed(ActionEvent e) {
 
@@ -75,11 +67,11 @@ a.initialize();
 
 	    }
 	});
-	VoidBtn.setBounds(10,85, 111, 22);
+	VoidBtn.setBounds(0,75, 120, 25);
 	getContentPane().add(VoidBtn);
 
-	
-	Button VmrBtn = new Button("Cargar Vmr");
+
+	Button VmrBtn = new Button(inter.texts.getString("Load_VMR"));
 	VmrBtn.addActionListener(new ActionListener() {
 	    public void actionPerformed(ActionEvent e) {
 
@@ -87,7 +79,7 @@ a.initialize();
 
 	    }
 	});
-	VmrBtn.setBounds(10,100, 111, 22);
+	VmrBtn.setBounds(0,100, 120, 25);
 	getContentPane().add(VmrBtn);
     }
 }

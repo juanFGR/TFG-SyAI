@@ -9,9 +9,15 @@ import java.awt.Panel;
 import java.awt.TextField;
 
 import stacks.Stack4D5D;
+import submodules.histograms.ChartForFFT;
 
 public class FIR_filters {
 
+    double[] buffer;
+    
+    public FIR_filters(double[] buffer) {
+	this.buffer = buffer;
+    }
 
     public static double sinc(final double x)
     {
@@ -23,6 +29,9 @@ public class FIR_filters {
 	return 1.0;
     }
 
+    
+    
+    double[] filterResponse;
     /** @param order The filter order (taps - 1)
      *  @param fc: The cut off frequency
      *  @param fs: The sample rate
@@ -135,19 +144,22 @@ public class FIR_filters {
 	return fir;
     }
 
-
-    public static void Plotting_frequency(final double[] fir)
+    
+    double[] filterResponse2;
+    public  void Plotting_frequency( double d,final double[] fir)
     {
-	for(int x = 0; x < 1024; x++)
+	 filterResponse2 = new double[fir.length];
+	for(int x = 0; x < fir.length; x++)
 	{
-	    final double w = x * Math.PI / 1024.0;
+	    final double w = (fir[x]*d) * Math.PI *2;
 	    double re = 0, im = 0;
 	    for(int i = 0; i < fir.length; i++)
 	    {
 		re += fir[i] * Math.cos(i * w);
 		im -= fir[i] * Math.sin(i * w);
 	    }
-	    final double v = Math.sqrt(re * re + im * im);
+	    
+	    filterResponse2[x]=Math.sqrt(re * re + im * im);
 	    // v now contains the 'magnitude' of the given frequency
 	    // a good thing would be: transform 'v' from linear to 
 	    // decibel scale and plot it (e.g. on a BufferedImage)
@@ -187,7 +199,7 @@ public class FIR_filters {
        
             tt[0] = new Label("Order");   
             panel.add(tt[0]);
-            tf[0] = new TextField(""+Stack4D5D.getSlices()); 
+            tf[0] = new TextField(""+(Stack4D5D.getFrames()-1)); 
             panel.add(tf[0]);
             tt[1] = new Label("Frequency");   
             panel.add(tt[1]);
@@ -195,7 +207,7 @@ public class FIR_filters {
             panel.add(tf[1]);
             tt[2] = new Label("S.rate");   
             panel.add(tt[2]);
-            tf[2] = new TextField(""+Stack4D5D.getFrames());
+            tf[2] = new TextField(""+Stack4D5D.getSlices());
             panel.add(tf[2]);
         
         return panel;
@@ -209,10 +221,30 @@ public class FIR_filters {
     }
 
     void displayValues() {
-        for (int i=0; i<3; i++) 
-            IJ.log(i+"  "+value[i]);  
+	double [] fir = createLowpass((int)value[0],value[1],value[2]);
+	
+	filterResponse = new double[fir.length];
+	System.out.println(fir.length);
+        for (int i=0; i<fir.length; i++)      {   
+           filterResponse[i] = operationWithFir(fir,buffer,i);
+        }
+    //    fir =windowSinc(filterResponse);
         
-        createLowpass((int)value[0],value[1],value[2]);
+        ChartForFFT chartForFFT = new ChartForFFT();
+        Plotting_frequency(((1.0/(Stack4D5D.formatVTC.getTr()/1000.0))/fir.length), fir);
+       
+        chartForFFT.initialize(filterResponse2,1);
+    }
+
+   
+
+    private double operationWithFir(double[] fir, double[] buffer2, int i) {
+	double tmp=0;
+	for (int j = 0; j < i+1; j++) {
+	   tmp+= fir[j]*buffer2[j]; 
+	}
+	
+	return tmp;
     }
 
     double getValue(String theText) {

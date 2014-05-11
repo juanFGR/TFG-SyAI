@@ -8,6 +8,8 @@ import java.awt.Color;
 import java.awt.Font;
 import java.util.Arrays;
 
+import core.inter.inter;
+
 
 
 public class ChartForMedia   {
@@ -34,7 +36,7 @@ public class ChartForMedia   {
 
 
 	ChartWindow.noGridLines = false; // draw grid lines
-	plot  = new Chart("Grafica para la media","Time(s)","Intensity",x,y);
+	plot  = new Chart(inter.texts.getString("H_media"),"Time(s)","Intensity",x,y);
 
 	plot.setLimits(Tools.getMinMax(x)[0], Tools.getMinMax(x)[1],Tools.getMinMax(y)[0] , Tools.getMinMax(y)[1]);	
 	plot.setLineWidth(1);

@@ -8,6 +8,6 @@ public class PFC_  implements PlugIn {
 	        
 	        Menu a = new Menu();
 	        a.setVisible(true);
-	        a.setSize(180, 400);
+	        a.setSize(120, 200);
 	}
 }

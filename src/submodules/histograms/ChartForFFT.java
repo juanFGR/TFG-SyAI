@@ -6,6 +6,8 @@ import java.awt.Color;
 import java.awt.Font;
 import java.util.Arrays;
 
+import core.inter.inter;
+
 public class ChartForFFT {
     Chart   plot;
     public Chart getPlot() {
@@ -16,9 +18,10 @@ public class ChartForFFT {
 	this.plot = plot;
     }
 
+	public float[] x;
     public void initialize(double[] real,double escala) {
 
-	float[] x;
+
 	float[] y;
 	x = new float[real.length/2];
 	    y = new float[real.length/2];  
@@ -31,7 +34,7 @@ public class ChartForFFT {
 
 
 	ChartWindow.noGridLines = false; // draw grid lines
-	plot  = new Chart("Transfrm Fourier","Frecuency(Hz)","10log(P)",x,y);
+	plot  = new Chart(inter.texts.getString("H_fourier"),"Frecuency(Hz)","10log(P)",x,y);
 	plot.setLimits(0, Tools.getMinMax(x)[1],Tools.getMinMax(real)[0] , Tools.getMinMax(real)[1]);
 	plot.setLineWidth(1);
 

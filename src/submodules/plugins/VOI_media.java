@@ -104,27 +104,30 @@ public class VOI_media  {
 	FFT transform = new FFT(nextPotencia2(buffer.length));
 	double[] imaginaria = new double[nextPotencia2(buffer.length)];
 	double[] real =  new double[nextPotencia2(buffer.length)];
-	
-	
-	FIR_filters filters = new FIR_filters();
-	filters.mostrar();
-	
-	
-	
+
+
+
+
+
+
 	Arrays.fill(imaginaria, 0);
 	Arrays.fill(real, 0);
-	
+
 	double _fillFFTwiththisvalue = 0;
 	for (int i = 0; i < buffer.length; i++) {
 	    real[i] = buffer[i];
 	    _fillFFTwiththisvalue +=buffer[i];
 	}
+
 	
+
 	_fillFFTwiththisvalue = (double)(_fillFFTwiththisvalue/(double)buffer.length);
 	for (int i = buffer.length-1; i < real.length; i++) {
 	    real[i] = _fillFFTwiththisvalue;
 	}
 	transform.fft(real, imaginaria);
+
+
 
 
 	ChartForFFT oopi = new ChartForFFT();
@@ -134,7 +137,12 @@ public class VOI_media  {
 	    real[i] = 10*Math.log10(modulo+1);//*(Math.cos(real[i]));
 	    //imaginaria[i] = modulo*(Math.sin(real[i]));
 	}
+	FIR_filters filters = new FIR_filters(real);
+	filters.mostrar();
+	
 	oopi.initialize(real,((1.0/(Stack4D5D.formatVTC.getTr()/1000.0))/real.length));
+
+	
 
     }
 

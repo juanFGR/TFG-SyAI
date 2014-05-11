@@ -1,11 +1,9 @@
 package views;
 
-import ij.IJ;
 import ij.ImagePlus;
 import ij.gui.DialogListener;
 import ij.gui.GenericDialog;
 import ij.gui.ImageCanvas;
-import ij.gui.NonBlockingGenericDialog;
 import ij.process.FloatProcessor;
 import ij.process.ImageProcessor;
 
@@ -22,40 +20,39 @@ import core.inter.inter;
 public class OrthogonalPerspective implements DialogListener  {
 
 
-    private ImagePlus ipxy, ipyz, ipxz; 
     ImageProcessor xy, yz, xz ;
     ImagePlus bxy , byz, bxz ;
     String typeView = null;
     ImageCanvas canvas;
 
-    
-    
+
+
     public void initialize () {
-	  
+
 	GenericDialog  gd = new GenericDialog("Controles");
-	      
-	       gd.addSlider("XY", 0.0, Stack4D5D.getSlices(), 0.0);
-	       gd.addSlider("XZ", 0.0, Stack4D5D.getHeight(), 0.0);
-	       gd.addSlider("YZ", 0.0, Stack4D5D.getWidth(), 0.0);
-	       gd.addSlider("Time", 0.0, Stack4D5D.getFrames(), 0.0);
-	       gd.setModal(false);
-	       gd.hideCancelButton();
-	       gd.setOKLabel("Cerrar");
-	       gd.addDialogListener(this);
-	       gd.showDialog();           // user input (or reading from macro) happens here       
+
+	gd.addSlider("XY", 0.0, Stack4D5D.getSlices(), 0.0);
+	gd.addSlider("XZ", 0.0, Stack4D5D.getHeight(), 0.0);
+	gd.addSlider("YZ", 0.0, Stack4D5D.getWidth(), 0.0);
+	gd.addSlider("Time", 0.0, Stack4D5D.getFrames(), 0.0);
+	gd.setModal(false);
+	gd.hideCancelButton();
+	gd.setOKLabel("Cerrar");
+	gd.addDialogListener(this);
+	gd.showDialog();           // user input (or reading from macro) happens here       
     }
-    
-     double []previusStates={0.0,0.0,0.0,0.0};
-   
-     
+
+    double []previusStates={0.0,0.0,0.0,0.0};
+
+
     @Override
     public boolean dialogItemChanged(GenericDialog gd, AWTEvent e) {
 	double []newStates={0.0,0.0,0.0,0.0};
 	for (int i = 0; i < newStates.length; i++) {
 	    newStates[i]= gd.getNextNumber();
 	}
-	
-	
+
+
 	GeneralPath path = new GeneralPath();
 	Point p = new Point((int)newStates[2] ,(int) newStates[1] );
 	drawXYCross(bxy, p, path);
@@ -68,8 +65,8 @@ public class OrthogonalPerspective implements DialogListener  {
 	bxy.setOverlay(path, Color.BLUE, new BasicStroke(1));
 	byz.setOverlay(path2, Color.BLUE, new BasicStroke(1));
 	bxz.setOverlay(path3, Color.BLUE, new BasicStroke(1));
-	
-	
+
+
 	if(previusStates[0]!=newStates[0]){
 	    previusStates[0]=newStates[0];
 	    updatexy((int)previusStates[0],(int)previusStates[3]);
@@ -88,8 +85,8 @@ public class OrthogonalPerspective implements DialogListener  {
 
 	return false;
     }
-    
-   
+
+
 
     public OrthogonalPerspective() {
 
@@ -97,9 +94,7 @@ public class OrthogonalPerspective implements DialogListener  {
 	yz = new FloatProcessor(Stack4D5D.getWidth(), Stack4D5D.getHeight(), Stack4D5D.getImgVectoryz(1,0));
 	xz = new FloatProcessor(Stack4D5D.getWidth(), Stack4D5D.getSlices(), Stack4D5D.getImgVectorxz(1,0));
 
-	ipxy = new ImagePlus("e",xy);
-	ipyz = new ImagePlus("eh",yz);
-	ipxz = new ImagePlus("ehh",xz);
+
 
 
 	bxy = new ImagePlus(inter.texts.getString("window_xy"), xy);
@@ -133,8 +128,8 @@ public class OrthogonalPerspective implements DialogListener  {
 
 
     }
-   
-    
+
+
     private void updatexy(int frame,int time) {
 	xy = new FloatProcessor(Stack4D5D.getWidth(), Stack4D5D.getHeight(), Stack4D5D.getImgVectorxy(frame+1,time));
 	ImagePlus txy = new ImagePlus("", xy);
@@ -169,16 +164,11 @@ public class OrthogonalPerspective implements DialogListener  {
     }
 
     void drawPoints(ImagePlus bxy2, GeneralPath path2) {
-	int one = 1;
-	int two = 2;
 
 	for(int h=0; h<Stack4D5D.ListOfVoid.size(); h++) {		
 	    path2.moveTo(Math.abs(Stack4D5D.ListOfVoid.get(h).x*Stack4D5D.TAM_RESIZE)/3,Math.abs(Stack4D5D.ListOfVoid.get(h).y*Stack4D5D.TAM_RESIZE)/3);
 	    path2.lineTo(Math.abs(Stack4D5D.ListOfVoid.get(h).x*Stack4D5D.TAM_RESIZE)/3,Math.abs(Stack4D5D.ListOfVoid.get(h).y*Stack4D5D.TAM_RESIZE)/3);
-
 	}
-
-
     }
 
 
@@ -209,44 +199,4 @@ public class OrthogonalPerspective implements DialogListener  {
 	path.moveTo(x, 0f);
 	path.lineTo(x, height);	
     }
-
-/*
-    public void mousePressed(MouseEvent e) {
-	int x = e.getX();
-	int y = e.getY();
-	int offscreenX = canvas.offScreenX(x);
-	int offscreenY = canvas.offScreenY(y);
-	IJ.log("Mouse pressed: "+offscreenX+","+offscreenY+modifiers(e.getModifiers()));
-	//IJ.log("Right button: "+((e.getModifiers()&Event.META_MASK)!=0));
-    }
-
-    public void mouseReleased(MouseEvent e) {
-	IJ.log("mouseReleased: ");
-    }
-
-    public void mouseDragged(MouseEvent e) {
-	int x = e.getX();
-	int y = e.getY();
-	int offscreenX = canvas.offScreenX(x);
-	int offscreenY = canvas.offScreenY(y);
-	IJ.log("Mouse dragged: "+offscreenX+","+offscreenY+modifiers(e.getModifiers()));
-    }
-
-    public static String modifiers(int flags) {
-	String s = " [ ";
-	if (flags == 0) return "";
-	if ((flags & Event.SHIFT_MASK) != 0) s += "Shift ";
-	if ((flags & Event.CTRL_MASK) != 0) s += "Control ";
-	if ((flags & Event.META_MASK) != 0) s += "Meta (right button) ";
-	if ((flags & Event.ALT_MASK) != 0) s += "Alt ";
-	s += "]";
-	if (s.equals(" [ ]"))
-	    s = " [no modifiers]";
-	return s;
-    }
-
-    public void mouseExited(MouseEvent e) {}
-    public void mouseClicked(MouseEvent e) {}	
-    public void mouseEntered(MouseEvent e) {}
-    public void mouseMoved(MouseEvent e) {}*/
 } 
