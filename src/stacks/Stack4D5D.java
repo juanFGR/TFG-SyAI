@@ -11,6 +11,7 @@ import java.util.Vector;
 
 import javax.vecmath.Point3d;
 
+import views.Filters;
 import core.Core;
 
 /**
@@ -34,6 +35,7 @@ public class Stack4D5D {
     public static FormatVTC formatVTC;
     public static int TAM_RESIZE = 5;
     public static ArrayList<Point3d> ListOfVoid =  new ArrayList<Point3d>();
+    public static Filters filters = new Filters();
 
     /**
      * Esta funcion saca del vector completo la imagen que nos interesa

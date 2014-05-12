@@ -1,5 +1,6 @@
 package submodules.plugins;
 
+import filters.FFT;
 import filters.FIR_filters;
 import ij.IJ;
 import ij.ImagePlus;
@@ -22,15 +23,14 @@ public class VOI_media  {
     int numberOfPixels;
     int frames;
     int firstPixel;
-    double[] media;
     ImagePlus a;
     HistogramWindow hist;
     ChartForMedia oop;
-    double[] buffer;
+    public static double[] buffer;
 
 
 
-    public int nextPotencia2(int n) 
+    public static int nextPotencia2(int n) 
     { 
 	int nPotencia=0,val =0;
 	while(val<=n){
@@ -98,49 +98,7 @@ public class VOI_media  {
 
 	oop.initialize(buffer,1);
 
-
-
-	System.out.println(nextPotencia2(buffer.length));
-	FFT transform = new FFT(nextPotencia2(buffer.length));
-	double[] imaginaria = new double[nextPotencia2(buffer.length)];
-	double[] real =  new double[nextPotencia2(buffer.length)];
-
-
-
-
-
-
-	Arrays.fill(imaginaria, 0);
-	Arrays.fill(real, 0);
-
-	double _fillFFTwiththisvalue = 0;
-	for (int i = 0; i < buffer.length; i++) {
-	    real[i] = buffer[i];
-	    _fillFFTwiththisvalue +=buffer[i];
-	}
-
 	
-
-	_fillFFTwiththisvalue = (double)(_fillFFTwiththisvalue/(double)buffer.length);
-	for (int i = buffer.length-1; i < real.length; i++) {
-	    real[i] = _fillFFTwiththisvalue;
-	}
-	transform.fft(real, imaginaria);
-
-
-
-
-	ChartForFFT oopi = new ChartForFFT();
-
-	for (int i = 0; i < real.length; i++) {
-	    double modulo = Math.sqrt(real[i]*real[i]+imaginaria[i]*imaginaria[i]);
-	    real[i] = 10*Math.log10(modulo+1);//*(Math.cos(real[i]));
-	    //imaginaria[i] = modulo*(Math.sin(real[i]));
-	}
-	FIR_filters filters = new FIR_filters(real);
-	filters.mostrar();
-	
-	oopi.initialize(real,((1.0/(Stack4D5D.formatVTC.getTr()/1000.0))/real.length));
 
 	
 

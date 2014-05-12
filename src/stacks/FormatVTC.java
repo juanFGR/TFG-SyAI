@@ -62,12 +62,14 @@ public class FormatVTC {
 	    setNumberOfProtocol(wrapped.getShort());	
 	    pos0 =wrapped.position();
 	    pos1 =pos0;
-	    
-	 
-	    while(wrapped.get() != 00){
-		pos1++;	
+
+	    if(wrapped.get() != 00){
+		pos1++;
+		while(wrapped.get() != 00){
+		    pos1++;	
+		}
+		pos1++;
 	    }
-	    pos1++;
 	    wrapped.position(pos1);
 	    setCurrentProtocol(wrapped.getShort());
 	    setDataTypeValues(wrapped.getShort());

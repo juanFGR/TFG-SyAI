@@ -4,6 +4,7 @@ import ij.IJ;
 
 import javax.swing.JFrame;
 
+import stacks.Stack4D5D;
 import submodules.plugins.VOI_media;
 import core.Core;
 import core.inter.inter;
@@ -25,7 +26,7 @@ public class Menu extends JFrame  {
 	    public void actionPerformed(ActionEvent e) {
 		
 		core.launch_Import_vtc_Sequence();
-		menuFilters.initialize();
+	
 	    }
 	});
 	importSequenceBtn.setBounds(0, 0, 120, 25);
@@ -45,14 +46,11 @@ public class Menu extends JFrame  {
 	getContentPane().add(openPerspectiveBtn);
 
 
-	Button Voi_MediaBtn = new Button("Signal");
+	Button Voi_MediaBtn = new Button("Filters");
 	Voi_MediaBtn.addActionListener(new ActionListener() {
 	    public void actionPerformed(ActionEvent e) {
 
-		if (IJ.getImage().getRoi() != null){
-		    VOI_media a = new VOI_media();
-		    a.initialize(IJ.getImage().getRoi());
-		}
+		Stack4D5D.filters.initialize();
 
 	    }
 	});
