@@ -42,7 +42,7 @@ public class OrthogonalPerspective implements DialogListener  {
 	gd.showDialog();           // user input (or reading from macro) happens here       
     }
 
-    double []previusStates={0.0,0.0,0.0,0.0};
+
 
 
     @Override
@@ -67,20 +67,20 @@ public class OrthogonalPerspective implements DialogListener  {
 	bxz.setOverlay(path3, Color.BLUE, new BasicStroke(1));
 
 
-	if(previusStates[0]!=newStates[0]){
-	    previusStates[0]=newStates[0];
-	    updatexy((int)previusStates[0],(int)previusStates[3]);
-	}else if(previusStates[1]!=newStates[1]){
-	    previusStates[1]=newStates[1];
-	    updatexz((int)previusStates[1],(int)previusStates[3]);
-	}else if(previusStates[2]!=newStates[2]){
-	    previusStates[2]=newStates[2];
-	    updateyz((int)previusStates[2],(int)previusStates[3]);
-	}else if(previusStates[3]!=newStates[3]){
-	    previusStates[3]=newStates[3];
-	    updatexy((int)previusStates[0],(int)previusStates[3]);
-	    updatexz((int)previusStates[1],(int)previusStates[3]);
-	    updateyz((int)previusStates[2],(int)previusStates[3]);
+	if(Stack4D5D.actualPlane[0]!=newStates[0]){
+	    Stack4D5D.actualPlane[0]=newStates[0];
+	    updatexy((int)Stack4D5D.actualPlane[0],(int)Stack4D5D.actualPlane[3]);
+	}else if(Stack4D5D.actualPlane[1]!=newStates[1]){
+	    Stack4D5D.actualPlane[1]=newStates[1];
+	    updatexz((int)Stack4D5D.actualPlane[1],(int)Stack4D5D.actualPlane[3]);
+	}else if(Stack4D5D.actualPlane[2]!=newStates[2]){
+	    Stack4D5D.actualPlane[2]=newStates[2];
+	    updateyz((int)Stack4D5D.actualPlane[2],(int)Stack4D5D.actualPlane[3]);
+	}else if(Stack4D5D.actualPlane[3]!=newStates[3]){
+	    Stack4D5D.actualPlane[3]=newStates[3];
+	    updatexy((int)Stack4D5D.actualPlane[0],(int)Stack4D5D.actualPlane[3]);
+	    updatexz((int)Stack4D5D.actualPlane[1],(int)Stack4D5D.actualPlane[3]);
+	    updateyz((int)Stack4D5D.actualPlane[2],(int)Stack4D5D.actualPlane[3]);
 	}
 
 	return false;

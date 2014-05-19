@@ -1,7 +1,5 @@
 package submodules.plugins;
 
-import filters.FFT;
-import filters.FIR_filters;
 import ij.IJ;
 import ij.ImagePlus;
 import ij.gui.HistogramWindow;
@@ -9,10 +7,10 @@ import ij.gui.Roi;
 
 import java.util.Arrays;
 
-import core.inter.inter;
 import stacks.Stack4D5D;
-import submodules.histograms.ChartForFFT;
+import submodules.histograms.Chart;
 import submodules.histograms.ChartForMedia;
+import core.inter.inter;
 
 public class VOI_media  {
 
@@ -21,11 +19,10 @@ public class VOI_media  {
      */
     private static final long serialVersionUID = 1L;
     int numberOfPixels;
-    int frames;
     int firstPixel;
     ImagePlus a;
     HistogramWindow hist;
-    ChartForMedia oop;
+    static ChartForMedia drawChartForMedia;
     public static double[] buffer;
 
 
@@ -55,27 +52,21 @@ public class VOI_media  {
     }
 
 
-    public void initialize( Roi roi) {
+    public void initialize( Roi roi,Boolean is_viewChart) {
 	numberOfPixels = (roi.getWidthOfRoi()/Stack4D5D.TAM_RESIZE) * (roi.getHeightOfRoi()/Stack4D5D.TAM_RESIZE);
-	frames = Stack4D5D.getFrames();
 	firstPixel = Stack4D5D.getposPixelInVector(Stack4D5D.getWidth(), Stack4D5D.getHeight(), (int)roi.getXBase()/Stack4D5D.TAM_RESIZE, (int)roi.getYBase()/Stack4D5D.TAM_RESIZE);
 	int []roiSizes = {roi.getWidthOfRoi()/Stack4D5D.TAM_RESIZE,roi.getHeightOfRoi()/Stack4D5D.TAM_RESIZE};
-	buffer = new double[Stack4D5D.getFrames()];
+	buffer = new double[Stack4D5D.getFrames()-(int) Stack4D5D.actualPlane[3]];
 
 
-	//ChartWindow.slicesSlider = new JSlider(JSlider.HORIZONTAL,0,Stack4D5D.getFrames()-1,0); 
-
-	//ChartWindow.slicesSlider.setMaximum(Stack4D5D.getFrames()-1);
-	//add(slicesSlider);
-	//ChartWindow.slicesSlider.addChangeListener(this);
 	float[] tmp;
 
 
-	for (int j = 0; j < Stack4D5D.getFrames(); j++) {
+	for (int j = (int) Stack4D5D.actualPlane[3]; j < Stack4D5D.getFrames(); j++) {
 	    float _media = 0;
-	    for (int i = 0; i < Stack4D5D.getSlices(); i++) {
+	    for (int i = (int) Stack4D5D.actualPlane[0]; i < Stack4D5D.getSlices(); i++) {
 
-		tmp = thatImage(i,j); 
+		tmp = thatImage(i,j-(int) Stack4D5D.actualPlane[3]); 
 		for (int y = 0; y < roiSizes[1]; y++) {
 		    for (int x = firstPixel+(roiSizes[0]*y)+(Stack4D5D.getWidth()-(firstPixel+roiSizes[0])); x < firstPixel+(roiSizes[0]*y)+(Stack4D5D.getWidth()-(firstPixel+roiSizes[0]))+roiSizes[0]; x++) {	    
 			_media += tmp[x]; 
@@ -84,26 +75,32 @@ public class VOI_media  {
 		tmp = null;
 	    }
 	    _media = _media/(numberOfPixels*Stack4D5D.getSlices());
-	    buffer[j] = _media;
+	    buffer[j-(int) Stack4D5D.actualPlane[3]] = _media;
 	}
 
-
-	//mediaOfValues();
-
-	//Panel_Window t = new Panel_Window(a);
-
-
-
-	oop = new ChartForMedia();
-
-	oop.initialize(buffer,1);
-
-	
-
-	
-
+	if(is_viewChart){
+	    drawChartForMedia = new ChartForMedia();
+	    drawChartForMedia.initialize(buffer,1);
+	   
+	}
     }
 
 
+   public static void addPointInChartMedia(double[] intensity){
+	float[] x,y;
+	x = new float[buffer.length];
+	int cont = buffer.length;
+	y = new float[buffer.length];
+	Arrays.fill(y, 0);
+	for (int i = buffer.length-1; i >= 0; i--) {
+	    x[i] = cont--;
+	    for (int j = 0; j < intensity.length; j++) {
+		if((i-j)>=0)
+		   y[i]+= (float) buffer[i-j]*intensity[j];
+	    }
+	}
+	Chart rr = new Chart("RRRRRR","ttt","ee", x, y);
+	rr.show();
+    }
 
 }

@@ -1,8 +1,6 @@
 package stacks;
 
 import java.awt.Color;
-import java.nio.ByteBuffer;
-import java.util.ArrayList;
 
 import javax.vecmath.Point3d;
 

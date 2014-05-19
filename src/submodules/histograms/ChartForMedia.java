@@ -15,6 +15,8 @@ import core.inter.inter;
 public class ChartForMedia   {
 
     Chart   plot;
+    double escala = 0;
+    
     public Chart getPlot() {
 	return plot;
     }
@@ -22,9 +24,15 @@ public class ChartForMedia   {
     public void setPlot(Chart plot) {
 	this.plot = plot;
     }
+    
+
+    public double getEscala() {
+        return escala;
+    }
 
     public void initialize(double[] intensity,double escala) {
 
+	this.escala = escala;
 	float[] x;
 	float[] y;
 	x = new float[intensity.length];

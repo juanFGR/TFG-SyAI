@@ -1,9 +1,5 @@
 package stacks;
 
-import ij.ImagePlus;
-import ij.process.FloatProcessor;
-import ij.process.ImageProcessor;
-
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
 
@@ -101,10 +97,8 @@ public class FormatVTC {
 		i++;
 	    }
 
-	    int t=5;
-	    int z  =20;
 
-	    wrapped.clear(); //clear buffer
+	    wrapped.clear(); 
 	    System.out.println("--->>>"+images.length);
 	}catch(Exception e){
 	    e.printStackTrace();

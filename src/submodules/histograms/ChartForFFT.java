@@ -9,7 +9,8 @@ import java.util.Arrays;
 import core.inter.inter;
 
 public class ChartForFFT {
-    Chart   plot;
+    public static Chart  plot;
+    public static float[] y;
     public Chart getPlot() {
 	return plot;
     }
@@ -18,11 +19,11 @@ public class ChartForFFT {
 	this.plot = plot;
     }
 
-	public float[] x;
+	public static float[] x;
     public void initialize(double[] real,double escala) {
 
 
-	float[] y;
+	
 	x = new float[real.length/2];
 	    y = new float[real.length/2];  
 	    for (int i = 0; i < real.length/2; i++) {
@@ -43,5 +44,7 @@ public class ChartForFFT {
 	plot.setColor(Color.blue);
 	plot.show();
     }
+    
+    
 
 }

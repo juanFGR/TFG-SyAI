@@ -1,14 +1,10 @@
 package views;
 
-import ij.IJ;
 
 import javax.swing.JFrame;
-
 import stacks.Stack4D5D;
-import submodules.plugins.VOI_media;
 import core.Core;
 import core.inter.inter;
-
 import java.awt.Button;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;

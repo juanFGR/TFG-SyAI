@@ -13,6 +13,7 @@ import javax.vecmath.Point3d;
 
 import views.Filters;
 import core.Core;
+import core.inter.inter;
 
 /**
  * El objetivo de esta clase es dar acceso al resto de clases y metodos a una 
@@ -36,6 +37,7 @@ public class Stack4D5D {
     public static int TAM_RESIZE = 5;
     public static ArrayList<Point3d> ListOfVoid =  new ArrayList<Point3d>();
     public static Filters filters = new Filters();
+    public static double[] actualPlane = {0.0,0.0,0.0,0.0};
 
     /**
      * Esta funcion saca del vector completo la imagen que nos interesa
@@ -205,6 +207,8 @@ public class Stack4D5D {
 	    setFactorScale((double) ((double) getSlices() / (double) getWidth()));
 	else
 	    setFactorScale((double) ((double) getWidth() / (double) getSlices()));
+	
+	IJ.showMessage(inter.texts.getString("INFO_loadComplete"));
 
     }
 

@@ -37,7 +37,7 @@ public class FFT {
     double[] sin;
 
     double[] window;
-   public static double[] real,imaginaria;
+    public static double[] real,imaginaria;
     public FFT(int n) {
 	this.n = n;
 	this.m = (int)(Math.log(n) / Math.log(2));
@@ -69,7 +69,7 @@ public class FFT {
 	makeWindow();
     }
 
-    public void  initializeAndDrawPlot(double[] buffer, int size){
+    public void  initializeAndDrawPlot(double[] buffer, int size, Boolean fLAG_FFT){
 	imaginaria = new double[size];
 	real =  new double[size];
 
@@ -93,16 +93,18 @@ public class FFT {
 
 
 
-	ChartForFFT oopi = new ChartForFFT();
+	
 
 	for (int i = 0; i < real.length; i++) {
 	    double modulo = Math.sqrt(real[i]*real[i]+imaginaria[i]*imaginaria[i]);
-	    real[i] = 10*Math.log10(modulo+1);//*(Math.cos(real[i]));
-	    //imaginaria[i] = modulo*(Math.sin(real[i]));
+	    real[i] = 10*Math.log10(modulo+1);
 	}
+	
 
-
-	oopi.initialize(real,((1.0/(Stack4D5D.formatVTC.getTr()/1000.0))/real.length));
+	if(fLAG_FFT){
+	ChartForFFT oopi = new ChartForFFT();
+	oopi.initialize(real,(1.0/(Stack4D5D.formatVTC.getTr()/1000.0)/real.length));
+	}
     }
 
 
